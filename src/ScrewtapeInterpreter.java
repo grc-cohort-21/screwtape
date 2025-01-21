@@ -91,7 +91,7 @@ public class ScrewtapeInterpreter {
    * A few more examples:
    * 
    * input: `[+++][---]<<[+]`
-   * output:`{4: 0, 9: 5, 14:1 2}`
+   * output:`{4: 0, 9: 5, 14: 12}`
    * 
    * input: `[]`
    * output: `{1: 0}`
