@@ -11,7 +11,7 @@ import java.util.Map;
  * - `+`: Increment the value in the current memory node.
  * - `-`: Decrement the value in the current memory node.
  * - `.`: Output the character represented by the value in the current memory node.
- * - `[`: If the value in the current memory node is 0, jump to the matching `]`.
+ * - `[`: Do nothing
  * - `]`: If the value in the current memory node is not 0, jump back to the matching `[`.
  * 
  * This interpreter provides methods to manipulate the memory tape, execute programs, and handle loops efficiently.

@@ -46,3 +46,13 @@ Also remember when you're moving your tapePointer to add new nodes to the beginn
 
 ## Submitting
 When finished, please make a PR and submit the link to the PR on Canvas. Nice job, this is a tough project!
+
+| Symbol | Description                                                               |
+|--------|---------------------------------------------------------------------------|
+| `>`    | Move the tape pointer to the next memory node.                            |
+| `<`    | Move the tape pointer to the previous memory node.                        |
+| `+`    | Increment the value in the current memory node.                           |
+| `-`    | Decrement the value in the current memory node.                           |
+| `.`    | Output the character represented by the value in the current memory node. |
+| `[`    | Do nothing                                                                |
+| `]`    | If the value in the current memory node is not 0, jump back to the matching `[`. |
