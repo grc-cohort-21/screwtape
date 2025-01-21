@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NodeTest {
 
+  // -------- WAVE 1 -------
+
   @Test
   void testListConstructorWithThreeValues() {
     // Arrange
@@ -39,10 +41,12 @@ class NodeTest {
     );
   }
 
+  
   // TODO: Add test for list constructor when passed null list
-
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
 
+
+  // -------- WAVE 2 -------
 
   @Test
   void testToListWithThreeValues() {
@@ -64,6 +68,5 @@ class NodeTest {
   }
 
   // TODO: Add test for Node with no next or prev
-
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
 }
