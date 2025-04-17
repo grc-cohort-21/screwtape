@@ -44,6 +44,15 @@ I strongly recommend looking at the comment at the top of the ScrewTapeInterpret
 
 Also remember when you're moving your tapePointer to add new nodes to the beginning or end of your tape if you run out of space.
 
+## Wave 5
+You will validate that the full application works by having it run on a sample file.
+
+Run the below command to compile and run your code. It will read from helloWorld.st, which contains a Screwtape program. If everything is working properly, it should print "Hello, World!" to the command line.
+
+```
+javac -cp lib/junit-platform-console-standalone-1.11.4.jar src/*.java && java -cp src ScrewtapeApp helloWorld.st
+```
+
 ## Submitting
 When finished, please make a PR and submit the link to the PR on Canvas. Nice job, this is a tough project!
 
