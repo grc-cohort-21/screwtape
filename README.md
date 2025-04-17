@@ -1,6 +1,6 @@
 # screwtape
 
-In this assignment you will implement an interpreter for a simple programming language.
+In this assignment you will implement an interpreter for a simple programming language. If you are getting stuck, feel free to check the `hints` directory. It has some small hints for each wave 1-4.
 
 ## Wave 1
 You will implement the constructor for the `Node` class that accepts a list of integers. It should have the `Node` under construction take the first value in the list. It should have its `next` point to a new `Node` that holds the second value in the list. That second node should point back to the first one, and so on for the 3rd, 4th, 5th, etc. nodes. In this way, the constructed node will be the head of a doubly linked list. You will NOT use the LinkedList java class. See the Javadoc for details.
