@@ -40,19 +40,21 @@ public class Node {
   public Node(List<Integer> list)
   {
     // TODO: implement this
-    int currentInteger = 0;
-    
-
-
-    for(int items: list)
+    if(list == null || list.isEmpty())
     {
-      int tempValue = 0;
-      currentInteger = items;
-      Node nodeOne = new Node(currentInteger);
-      Node nodeTwo = new Node(tempValue);
-      nodeOne
+      throw new  IllegalArgumentException("List is empty");
     }
 
+    Node nodeOne = new Node(list.get(0));
+    Node current = nodeOne;
+    for(int i = 0; i < list.size() - 1; i++)
+    {
+      Node nextNode = new Node(list.get(i + 1));
+      current.next = nextNode;
+      nextNode.prev = current;
+      current = nextNode;
+    }
+    return;
   }
 
   /**
