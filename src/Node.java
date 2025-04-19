@@ -69,12 +69,19 @@ public class Node {
 
     Node current = this;
     List<Integer> myList = new ArrayList<>();
-    while(current != null)
+
+    if(current.next == null)
     {
       myList.add(current.value);
-      current = current.next;
     }
-
+    else
+    {
+      while(current != null)
+      {
+        myList.add(current.value);
+        current = current.next;
+      }
+    }
     return myList;
   }
 }
