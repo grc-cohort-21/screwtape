@@ -57,6 +57,25 @@ class NodeTest {
   }
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
 
+  @Test
+  void testListConstructorWithThreeSimilarValues() {
+    // Arrange
+    List<Integer> values = List.of(5, 5, 5);
+
+    // Act
+    Node head = new Node(values);
+
+    // Assert
+    assertEquals(5, head.value);
+    assertNotNull(head.next);
+    assertEquals(5, head.next.value);
+    assertNotNull(head.next.next);
+    assertEquals(5, head.next.next.value);
+    assertNull(head.next.next.next);
+    assertEquals(head, head.next.prev);
+    assertEquals(head.next, head.next.next.prev);
+  }
+
 
   // -------- WAVE 2 -------
 
@@ -96,4 +115,23 @@ class NodeTest {
 
 
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+
+  @Test
+  void testToListWithThreeSimilarValues() {
+    // Arrange
+    Node head = new Node(5);
+    Node middle = new Node(5);
+    Node tail = new Node(5);
+
+    head.next = middle;
+    middle.prev = head;
+    middle.next = tail;
+    tail.prev = middle;
+
+    // Act
+    List<Integer> values = head.toList();
+
+    // Assert
+    assertEquals(List.of(5, 5, 5), values);
+  }
 }
