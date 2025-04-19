@@ -37,8 +37,22 @@ public class Node {
    * @param list The list of integers to initialize the doubly linked list.
    * @throws IllegalArgumentException If the list is null or empty.
    */
-  public Node(List<Integer> list) {
+  public Node(List<Integer> list)
+  {
     // TODO: implement this
+    int currentInteger = 0;
+    
+
+
+    for(int items: list)
+    {
+      int tempValue = 0;
+      currentInteger = items;
+      Node nodeOne = new Node(currentInteger);
+      Node nodeTwo = new Node(tempValue);
+      nodeOne
+    }
+
   }
 
   /**
