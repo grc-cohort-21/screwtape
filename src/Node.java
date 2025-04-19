@@ -45,8 +45,8 @@ public class Node {
       throw new  IllegalArgumentException("List is empty");
     }
 
-    Node nodeOne = new Node(list.get(0));
-    Node current = nodeOne;
+    this.value = list.get(0);
+    Node current = this;
     for(int i = 0; i < list.size() - 1; i++)
     {
       Node nextNode = new Node(list.get(i + 1));
