@@ -39,6 +39,10 @@ public class Node {
    */
   public Node(List<Integer> list) {
     // TODO: implement this
+    for (Integer num : list) {
+      Node currNode = new Node(num);
+    }
+    
   }
 
   /**
