@@ -38,6 +38,19 @@ public class Node {
    * @throws IllegalArgumentException If the list is null or empty.
    */
   public Node(List<Integer> list) {
+    int index = 0;
+    Node current = new Node(list.get(index));
+
+    if(list.size() > 0)
+    {
+      this.value = list.get(0);
+    }
+    
+    next = new Node(list.get(++index));
+    next.next = new Node(list.get(++index));
+    prev = new Node(list.get(--index));
+    next.prev =  new Node(list.get(index));
+    
     // TODO: implement this
   }
 
