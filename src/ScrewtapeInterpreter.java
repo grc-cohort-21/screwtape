@@ -110,25 +110,31 @@ public class ScrewtapeInterpreter {
     // TODO: Implement this
     // Hint: use a stack
     HashMap<Integer, Integer> map = new HashMap<>();
-    Stack<String> stack = new Stack<>();
-    String regexOne = "]";
-    String regexTwo = "[";
-    int counter = 0;
+    Stack<Integer> stack = new Stack<>();
+    char regexOne = '[';
+    char regexTwo = ']';
 
-    for(char items: program.toCharArray())
+    for(int i = 0; i < program.length(); i++)
     {
-      String newItem = Character.toString(items);
-      stack.push(newItem);
-      counter++;
-    }
-    
-    if(stack.pop() == regexOne)
-    {
-      map.(counter,0);
+      char newChar = program.charAt(i);
+
+      if(newChar == regexOne)
+      {
+        stack.push(i);
+      } else if(newChar == regexTwo)
+      {
+        if(stack.isEmpty())
+        {
+          throw new IllegalArgumentException("Progam must contain a open bracket");
+        }
+
+        int poppedIndex = stack.pop();
+        map.put(i, poppedIndex);
+      }
+
     }
 
-
-    return null;
+    return map;
   }
 
   /**
