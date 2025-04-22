@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -40,7 +39,6 @@ public class Node {
    * @throws IllegalArgumentException If the list is null or empty.
    */
   public Node(List<Integer> list) {
-    // +TODO: implement this
     if (list == null || list.isEmpty()) {
       throw new IllegalArgumentException("List must not be empty or null.");
     }
@@ -64,7 +62,6 @@ public class Node {
    * @return A list of integers representing the values in the linked list.
    */
   public List<Integer> toList() {
-    // TODO: Implement this
     Node current = this;
     List<Integer> integers = new ArrayList<>();
 
