@@ -39,6 +39,23 @@ public class Node {
    */
   public Node(List<Integer> list) {
     // TODO: implement this
+    try{
+        /** The value stored in this node. */
+      this.value = list.get(0);
+
+      /** The previous node in the linked list. */
+      prev = null;
+
+      /** The next node in the linked list. */
+      Node current = this;
+      for (int i=1; i<list.size(); i++) {
+        current.next = new Node(list.get(i));
+        current = current.next;
+      }
+    }catch(){
+      System.out.println("don't use null or empty lists.")
+    }
+    
   }
 
   /**
