@@ -38,8 +38,8 @@ public class Node {
    * @throws IllegalArgumentException If the list is null or empty.
    */
   public Node(List<Integer> list) {
-    // TODO: implement this
-    if (list.isEmpty() || list == null) {
+    // +TODO: implement this
+    if (list == null || list.isEmpty()) {
       throw new IllegalArgumentException("List must not be empty or null.");
     }
 
