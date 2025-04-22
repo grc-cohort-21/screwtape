@@ -62,7 +62,9 @@ public class Node {
    * @return A list of integers representing the values in the linked list.
    */
   public List<Integer> toList() {
+    
     Node current = this;
+    
     List<Integer> integers = new ArrayList<>();
 
     while (current != null) {
