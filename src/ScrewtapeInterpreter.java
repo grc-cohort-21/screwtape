@@ -111,11 +111,20 @@ public class ScrewtapeInterpreter {
     // Hint: use a stack
     HashMap<Integer, Integer> map = new HashMap<>();
     Stack<String> stack = new Stack<>();
+    String regexOne = "]";
+    String regexTwo = "[";
+    int counter = 0;
 
     for(char items: program.toCharArray())
     {
       String newItem = Character.toString(items);
       stack.push(newItem);
+      counter++;
+    }
+    
+    if(stack.pop() == regexOne)
+    {
+      map.(counter,0);
     }
 
 
