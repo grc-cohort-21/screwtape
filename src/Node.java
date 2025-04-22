@@ -39,10 +39,16 @@ public class Node {
    */
   public Node(List<Integer> list) {
     // TODO: implement this
-    for (Integer num : list) {
-      Node currNode = new Node(num);
+    // for (Integer num : list) {
+    //   Node currNode = new Node(num);
+    // }
+    for (int i=0;i<list.size();i++) {
+      Node currNode = new Node(list.get(i));
+      Node nextNode = new Node(list.get(i+1));
+      currNode.next = nextNode;
+      nextNode.prev = currNode;
+      currNode = currNode.next;
     }
-    
   }
 
   /**
