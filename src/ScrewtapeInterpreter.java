@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -158,6 +160,51 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
+
+    /**
+    * A Screwtape interpreter that executes programs written in the Screwtape esoteric programming language.
+    * 
+    * Screwtape is a minimalistic language with the following commands:
+    * 
+    * - `>`: Move the tape pointer to the next memory node.
+    * - `<`: Move the tape pointer to the previous memory node.
+    * - `+`: Increment the value in the current memory node.
+    * - `-`: Decrement the value in the current memory node.
+    * - `.`: Output the character represented by the value in the current memory node.
+    * - `[`: Do nothing
+    * - `]`: If the value in the current memory node is not 0, jump back to the matching `[`.
+    * 
+    * This interpreter provides methods to manipulate the memory tape, execute programs, and handle loops efficiently.
+    */
+
+
+
+    //Init list to hold operations
+    List<Character> operations = new ArrayList<>();
+    operations.add('>');
+    operations.add('<');
+    operations.add('+');
+    operations.add('-');
+    operations.add('.');
+    operations.add(']');
+    operations.add('[');
+
+    //Map for indexes and actions
+    Map<Character, Integer> indexMap = new HashMap<>();
+
+
+    //Loop through string with program attached
+    for(char items: program.toCharArray())
+    {
+      indexMap.put(items, program.indexOf(items));
+      if(operations.contains(items))
+      {
+        
+      }
+    }  
+    
+
+
     return null;
   }
 }
