@@ -195,30 +195,39 @@ public class ScrewtapeInterpreter {
 
     for(int j = 0; j < program.length(); j++)
     {
-      if(indexMap.containsKey(program.charAt(j)))
-      {
-        if(program.charAt(j) == '+')
+      
+        char tapeScrew = program.charAt(j); 
+
+        if(tapeScrew == '>')
         {
-          Temp.value = Temp.value + 1;
+          if(pointer.next == null)
+          {
+            pointer.next = new Node(0);
+            pointer.next.prev = pointer;
+          }
+          pointer = pointer.next;
         }
-        if(program.charAt(j) == '-')
+        else if(tapeScrew == '<')
         {
-          Temp.value = Temp.value - 1;
+          if(pointer.prev == null)
+          {
+            pointer.prev = new Node(0);
+            pointer.prev.next = pointer;
+          }
+          pointer = pointer.prev;
         }
-        if(program.charAt(j) == '>')
+        else if(tapeScrew == '-')
         {
-          Temp.next = new Node(0);
-          moveTapePointerToHead();
+          pointer.value = pointer.value - 1;
         }
-        if(program.charAt(j) == '<')
+        else if(tapeScrew == '+')
         {
-          Temp.prev = new Node(0);
-          moveTapePointerToTail();
+          pointer.value = pointer.value + 1;
         }
-      }
+      
     }
 
 
-    return null;
+    return Temp.toString();
   }
 }
