@@ -36,7 +36,7 @@ class ScrewtapeInterpreterTest {
         "Expected constructor to throw IllegalArgumentException for mismatched brackets."
     );
   }
-  
+
   @Test
   void testBracketMap() {
     // Arrange

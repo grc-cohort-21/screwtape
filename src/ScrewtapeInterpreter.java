@@ -149,6 +149,38 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    String output = "";
+    int count = 0;
+    for(int i = 0; i < program.length(); i++){
+      if(program.charAt(i) == '+'){
+        this.tapePointer.value++;
+      }
+      else if(program.charAt(i) == '-'){
+        this.tapePointer.value--;
+      }
+      else if(program.charAt(i) == '>'){
+        ScrewtapeInterpreter newNode = new ScrewtapeInterpreter();
+        this.tapePointer.next = newNode.tapePointer;
+        newNode.tapePointer.prev = this.tapePointer;
+        this.tapePointer = this.tapePointer.next;
+      }
+      else if(program.charAt(i) == '<'){
+        ScrewtapeInterpreter newNode = new ScrewtapeInterpreter();
+        this.tapePointer.prev = newNode.tapePointer;
+        newNode.tapePointer.next = this.tapePointer;
+        this.tapePointer = this.tapePointer.prev;
+        this.tapeHead = this.tapePointer;
+      }
+      else if(program.charAt(i) == '['){
+
+      }
+      else if(program.charAt(i) == ']'){
+
+      }
+      else if(program.charAt(i) == '.'){
+
+      }
+    }
+    return String.valueOf(count);
   }
 }
