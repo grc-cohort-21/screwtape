@@ -32,7 +32,6 @@ class NodeTest {
   void testListConstructorWithEmptyList() {
     // Arrange
     List<Integer> emptyList = new ArrayList<>();
-
     // Act and Assert
     assertThrows(
         IllegalArgumentException.class,
@@ -47,21 +46,32 @@ class NodeTest {
   void testListConstructorWithNullList() {
     // Arrange
     List<Integer> NullList = new ArrayList<>();
-    NullList.set(0, null);
-    NullList.set(1, null);
-    NullList.set(2, null);
+    // Act and Assert
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> new Node(NullList),
+        "Expected constructor to throw IllegalArgumentException for a null list."
+    );
+  }
+ 
+
+  // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  @Test
+  void testListConstructorWithNullVals() {
+    // Arrange
+    List<Integer> NullList = new ArrayList<>();
+    NullList.add(null);
+    NullList.add(null);
+    NullList.add(null);
 
 
     // Act and Assert
     assertThrows(
         IllegalArgumentException.class,
         () -> new Node(NullList),
-        "Expected constructor to throw IllegalArgumentException for an empty list."
+        "Expected constructor to throw IllegalArgumentException for a list with null values."
     );
   }
-
-  // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
-
 
   // -------- WAVE 2 -------
 
