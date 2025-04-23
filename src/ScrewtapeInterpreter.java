@@ -108,23 +108,27 @@ public class ScrewtapeInterpreter {
    */
   public Map<Integer, Integer> bracketMap(String program) {
     // TODO: Implement this
-    Stack<Character> stack = new Stack<>();
+    Stack<Integer> stack = new Stack<>();
     // Hint: use a stack
-    Map<Character, Character> parens = new HashMap<>();
-    parens.put('(', ')');
-    parens.put('{', '}');
-    parens.put('[', ']');
+    Character current;
+    
+    Map<Integer,Integer> matches = new HashMap<>();
 
     for(int i=0; i<program.length(); i++){
+      current = program.charAt(i);
+      
       //if current is opener...
-      if(parens.containsKey(program.charAt(i))){
+      if(current == '['){
         //push match to stack for later comparison
-        stack.push(parens.get(program.charAt(i)));
-      } else {
-        if(stack.pop() != program.charAt(i)) throw new IllegalArgumentException();
+        stack.push(i);
+        //if current is a closer
+      } else if(current == ']'){
+        //check for a match and pull from stack
+        matches.put(i,stack.pop());
       }
     }
-    return null;
+    if(!stack.isEmpty()) throw new IllegalArgumentException();
+    return matches;
   }
 
   /**
