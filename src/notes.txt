@@ -1,0 +1,7 @@
+wvae 3:
+
+    see parethesis neetcodes problem for bracket validation
+    use counters and data structures to track '+', '-', '>' and '<' 
+    to translate the code into java
+
+    using a map? to track the closing brackets see wave 3 instructions
