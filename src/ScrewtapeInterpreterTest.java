@@ -25,8 +25,79 @@ class ScrewtapeInterpreterTest {
 
   // TODO: Implement more tests for bracketMap
   // At a bare minimum, implement the other examples from the Javadoc and at least one more you come up with
+  @Test
+  void testNestedBracketMapFirstExample() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[+++][---]<<[+]";
 
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(4, 0);
+    expectedMap.put(9, 5);
+    expectedMap.put(14, 12);
+
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+    assertEquals(expectedMap, actualMap);
+  }
   
+  @Test
+  void testNestedBracketMapSecondExample() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[]";
+
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(1, 0);
+
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  void testNestedBracketMapThirdExample() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = ">[+>[+-]<]";
+
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(9, 1);
+    expectedMap.put(7, 4);
+
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  void testNestedBracketMapInvalidInputCloseBeforeOpen() {
+
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "][";
+
+    
+
+    assertThrows(IllegalArgumentException.class, () -> interpreter.bracketMap(program));
+  }
+
+  @Test
+  void testNestedBracketMapInvalidInputMismatchPairs() {
+
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[[]]][]]";
+
+    assertThrows(IllegalArgumentException.class, () -> interpreter.bracketMap(program));
+  }
+
+  @Test
+  void testNestedBracketMapInvalidInputMissingClose() {
+
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[[";
+
+    assertThrows(IllegalArgumentException.class, () -> interpreter.bracketMap(program));
+  }
 
   @Test
   void testAdd() {
