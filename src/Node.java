@@ -41,7 +41,17 @@ public class Node {
     if (list.isEmpty()) {
       throw new IllegalArgumentException("List can not be empty.");
     }
-    // System.out.println(list.get(0));
+    if (list.get(0) == null) {
+      throw new IllegalArgumentException("List can not begin with null.");
+    }
+
+    // Logic for if list can not contain any null values
+    // for (int i = 0; i < list.size(); i++) {
+    //   if (list.get(i) == null) {
+    //     throw new IllegalArgumentException("List can not contain null values.");
+    //   }
+    // }
+
     this.value = list.get(0);
     Node current = this;
     for (int i = 1; i < list.size(); i++) {

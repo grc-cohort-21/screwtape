@@ -41,9 +41,46 @@ class NodeTest {
     );
   }
 
+  @Test
+  void testListConstructorWithNullList() {
+    // Arrange
+    List<Integer> nullList = new ArrayList<>();
+    nullList.add(null);
+    // Act and Assert
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> new Node(nullList),
+        "Expected constructor to throw IllegalArgumentException for a null list."
+    );
+  }
+
+  // @Test
+  // void testListConstructorWithNullListvalues() {
+  //   // Arrange
+  //   List<Integer> nullList = new ArrayList<>();
+  //   nullList.add(3);
+  //   nullList.add(null);
+  //   nullList.add(5);
+  //   // Act and Assert
+  //   assertThrows(
+  //       IllegalArgumentException.class,
+  //       () -> new Node(nullList),
+  //       "Expected constructor to throw IllegalArgumentException for a null list."
+  //   );
+  // }
   
-  // TODO: Add test for list constructor when passed null list
-  // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  @Test
+  void testListConstructorWithOneValue() {
+    // Arrange
+    List<Integer> values = List.of(5);
+
+    // Act
+    Node head = new Node(values);
+
+    // Assert
+    assertEquals(5, head.value);
+    assertNull(head.next);
+  }
 
 
   // -------- WAVE 2 -------
