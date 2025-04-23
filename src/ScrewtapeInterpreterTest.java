@@ -68,6 +68,19 @@ class ScrewtapeInterpreterTest {
   }
 
   @Test
+  void testNoBracketsBracketMap() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "+++";
+
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
   void testAdd() {
     // Arrange
     ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();

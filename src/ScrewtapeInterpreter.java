@@ -150,7 +150,8 @@ public class ScrewtapeInterpreter {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
     String output = "";
-    int count = 0;
+    Map<Integer, Integer> brackIndex = this.bracketMap(program);
+
     for(int i = 0; i < program.length(); i++){
       if(program.charAt(i) == '+'){
         this.tapePointer.value++;
@@ -159,28 +160,40 @@ public class ScrewtapeInterpreter {
         this.tapePointer.value--;
       }
       else if(program.charAt(i) == '>'){
-        ScrewtapeInterpreter newNode = new ScrewtapeInterpreter();
-        this.tapePointer.next = newNode.tapePointer;
-        newNode.tapePointer.prev = this.tapePointer;
-        this.tapePointer = this.tapePointer.next;
+        if(this.tapePointer.next == null){
+          ScrewtapeInterpreter newNode = new ScrewtapeInterpreter();
+          this.tapePointer.next = newNode.tapePointer;
+          newNode.tapePointer.prev = this.tapePointer;
+          this.tapePointer = this.tapePointer.next;
+        }else{
+          this.tapePointer = this.tapePointer.next;
+        }
       }
       else if(program.charAt(i) == '<'){
-        ScrewtapeInterpreter newNode = new ScrewtapeInterpreter();
-        this.tapePointer.prev = newNode.tapePointer;
-        newNode.tapePointer.next = this.tapePointer;
-        this.tapePointer = this.tapePointer.prev;
-        this.tapeHead = this.tapePointer;
+        if(this.tapePointer.prev == null){
+          ScrewtapeInterpreter newNode = new ScrewtapeInterpreter();
+          this.tapePointer.prev = newNode.tapePointer;
+          newNode.tapePointer.next = this.tapePointer;
+          this.tapePointer = this.tapePointer.prev;
+          this.tapeHead = this.tapePointer;
+        }else{
+          this.tapePointer = this.tapePointer.prev;
+        }
       }
       else if(program.charAt(i) == '['){
-
+        continue;
       }
       else if(program.charAt(i) == ']'){
-
+        if(this.tapePointer.value != 0){
+          i = brackIndex.get(i);
+        }
       }
       else if(program.charAt(i) == '.'){
-
+        char letter = (char)this.tapePointer.value;
+        output = output + letter;
       }
     }
-    return String.valueOf(count);
+    
+    return output;
   }
 }
