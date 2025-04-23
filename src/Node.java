@@ -40,9 +40,8 @@ public class Node {
    */
   public Node(List<Integer> list) {
     // TODO: implement this 
-   if(list.isEmpty() || list.contains(null) || list.equals(null)) throw new IllegalArgumentException();
-   
-    try{
+    if(list.isEmpty() || list.equals(null)) throw new IllegalArgumentException();
+    if(list.contains(null))  throw new IllegalArgumentException();
         /** The value stored in this node. */
       this.value = list.get(0);
 
@@ -57,10 +56,6 @@ public class Node {
         current = current.next;
         
       }
-    }catch(IllegalArgumentException e){
-      System.out.println("don't use null or empty lists.");
-    }
-    
   }
 
   /**
