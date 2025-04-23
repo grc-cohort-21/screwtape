@@ -181,18 +181,6 @@ public class ScrewtapeInterpreter {
     Node pointer = tapePointer;
 
 
-    //Map for indexes and actions
-    Map<Character, List<Integer>> indexMap = new HashMap<>();
-
-
-    //Loop through string with program attached
-    for(int i = 0; i < program.length(); i++)
-    {
-      char operators = program.charAt(i); //Retrieve Values
-      indexMap.putIfAbsent(operators, new ArrayList<>()); //Store Operators as Chars and add a list for said Char
-      indexMap.get(operators).add(i);//add where on the index it pops up ex "++-+" {+:[0,1,3], -:[2]}
-    }  
-
     for(int j = 0; j < program.length(); j++)
     {
       
