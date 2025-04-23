@@ -1,5 +1,7 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * A Screwtape interpreter that executes programs written in the Screwtape esoteric programming language.
@@ -107,7 +109,23 @@ public class ScrewtapeInterpreter {
   public Map<Integer, Integer> bracketMap(String program) {
     // TODO: Implement this
     // Hint: use a stack
-    return null;
+    Map <Integer, Integer> returnMap = new HashMap<>();
+    Stack <Character> stack = new Stack<>();
+    Stack <Integer> indexCounter = new Stack<>();
+
+    for(int i = 0; i < program.length(); i++){
+      if(program.charAt(i) == '['){
+        stack.push(']');
+        indexCounter.push(i);
+      }else if(program.charAt(i) == ']'){
+        stack.pop();
+        returnMap.put(i, indexCounter.pop());
+      }
+    }
+    if(!stack.isEmpty()){
+      throw new IllegalArgumentException();
+    }
+    return returnMap;
   }
 
   /**
@@ -131,6 +149,48 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    String output = "";
+    Map<Integer, Integer> brackIndex = this.bracketMap(program);
+
+    for(int i = 0; i < program.length(); i++){
+      if(program.charAt(i) == '+'){
+        this.tapePointer.value++;
+      }
+      else if(program.charAt(i) == '-'){
+        this.tapePointer.value--;
+      }
+      else if(program.charAt(i) == '>'){
+        if(this.tapePointer.next == null){
+          ScrewtapeInterpreter newNode = new ScrewtapeInterpreter();
+          this.tapePointer.next = newNode.tapePointer;
+          newNode.tapePointer.prev = this.tapePointer;
+          this.tapePointer = this.tapePointer.next;
+        }else{
+          this.tapePointer = this.tapePointer.next;
+        }
+      }
+      else if(program.charAt(i) == '<'){
+        if(this.tapePointer.prev == null){
+          ScrewtapeInterpreter newNode = new ScrewtapeInterpreter();
+          this.tapePointer.prev = newNode.tapePointer;
+          newNode.tapePointer.next = this.tapePointer;
+          this.tapePointer = this.tapePointer.prev;
+          this.tapeHead = this.tapePointer;
+        }else{
+          this.tapePointer = this.tapePointer.prev;
+        }
+      }
+      else if(program.charAt(i) == ']'){
+        if(this.tapePointer.value != 0){
+          i = brackIndex.get(i);
+        }
+      }
+      else if(program.charAt(i) == '.'){
+        char letter = (char)this.tapePointer.value;
+        output = output + letter;
+      }
+    }
+    
+    return output;
   }
 }
