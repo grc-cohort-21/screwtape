@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.List;
 
@@ -67,6 +68,12 @@ public class Node {
    */
   public List<Integer> toList() {
     // TODO: Implement this
-    return null;
+    List<Integer> list = new ArrayList<>();
+    Node cur = this;
+    while(cur != null){
+      list.add(cur.value);
+      cur = cur.next;
+    }
+    return list;
   }
 }
