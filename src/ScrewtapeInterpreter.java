@@ -180,9 +180,6 @@ public class ScrewtapeInterpreter {
           this.tapePointer = this.tapePointer.prev;
         }
       }
-      else if(program.charAt(i) == '['){
-        continue;
-      }
       else if(program.charAt(i) == ']'){
         if(this.tapePointer.value != 0){
           i = brackIndex.get(i);
