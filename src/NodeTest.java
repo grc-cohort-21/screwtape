@@ -68,5 +68,27 @@ class NodeTest {
   }
 
   // TODO: Add test for Node with no next or prev
+  @Test
+  void testSingleElement(){
+    Node head = new Node(5);
+
+    List<Integer> values = head.toList();
+
+    assertEquals(List.of(5), values);
+  }
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  @Test
+  void constructerWithOneValue(){
+     // Arrange
+     List<Integer> values = List.of(5);
+
+     // Act
+     Node head = new Node(values);
+ 
+     // Assert
+     assertEquals(5, head.value);
+     assertNull(head.next);
+     assertNull(head.prev);
+     
+  }
 }
