@@ -151,7 +151,44 @@ public class ScrewtapeInterpreter {
    */
   public String execute(String program) {
     // TODO: Implement this
+    Map<Integer,Integer> bMap = bracketMap(program);
+    int progress = 0;
+    Character current;
+    while(progress < program.length()){
+      current = program.charAt(progress);
+      if(current == '+'){
+        tapePointer.value++;
+      }else if(current == '-'){
+        tapePointer.value--;
+      }else if(current == '>'){
+        tapePointer.next = new Node(0);
+        tapePointer = tapePointer.next;
+      }else if(current == '<'){
+        if(tapePointer.prev == null){
+          tapePointer.prev = new Node(0);
+          tapePointer = tapePointer.prev;
+          tapePointer.next = tapeHead;
+          tapeHead = tapePointer;
+        }else{
+          tapePointer = tapePointer.prev;
+        }
+      }else if(current == '['){
+        
+      }else if(current == ']'){
+        if(tapePointer.value != 0){
+          int loopStart = bMap.get(progress);
+          int loopEnd = progress;
+          int stepsBack = loopEnd - loopStart;
+          while(stepsBack > 0){
+            tapePointer = tapePointer.prev;
+            progress --;
+          }
+        }
+      }
+      progress++;
+    }
     // If you get stuck, you can look at hint.md for a hint
     return null;
   }
+  
 }
