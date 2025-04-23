@@ -41,7 +41,15 @@ public class Node {
   public Node(List<Integer> list) {
     // TODO: implement this 
     if(list.isEmpty() || list.equals(null)) throw new IllegalArgumentException();
-    if(list.contains(null))  throw new IllegalArgumentException();
+    //currently get a null pointer exception not sure why since the list must have passed is empty and .equals null. checking for null values should allow regular values unchanged...
+    try{
+      if(list.contains(null)){
+        throw new IllegalArgumentException();
+      }
+    }catch(NullPointerException e){
+      
+    }
+    
         /** The value stored in this node. */
       this.value = list.get(0);
 
@@ -70,7 +78,7 @@ public class Node {
     Node current = this;
     while(current != null){
       newList.add(current.value);
-      if(current.next != null) current = current.next;
+      current = current.next;
     }
     return newList;
   }

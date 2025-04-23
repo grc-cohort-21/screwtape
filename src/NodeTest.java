@@ -61,7 +61,7 @@ class NodeTest {
     // Arrange
     List<Integer> NullList = new ArrayList<>();
     NullList.add(null);
-    NullList.add(null);
+    NullList.add(1);
     NullList.add(null);
 
 
@@ -95,5 +95,35 @@ class NodeTest {
   }
 
   // TODO: Add test for Node with no next or prev
+  @Test
+  void testToListNodeWithNoFriends() {
+    // Arrange
+    Node lonelyNode = new Node(5);
+
+    // Act
+    List<Integer> values = lonelyNode.toList();
+    // Assert
+    assertEquals(List.of(5), values);
+  }
+
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  @Test
+  void testListConstructorWithFourVals() {
+    // Arrange
+    List<Integer> values = List.of(5, 7, 3, 4);
+    // Act
+    Node head = new Node(values);
+    // Assert
+    assertEquals(5, head.value);
+    assertNotNull(head.next);
+    assertEquals(7, head.next.value);
+    assertNotNull(head.next.next);
+    assertEquals(3, head.next.next.value);
+    assertEquals(4, head.next.next.next.value);
+    assertNull(head.next.next.next.next);
+    assertEquals(head, head.next.prev);
+    assertEquals(head.next, head.next.next.prev);
+    assertEquals(head.next.next, head.next.next.next.prev);;
+  }
+
 }
