@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,15 +40,15 @@ public class Node {
    */
   public Node(List<Integer> list) {
     // TODO: implement this
-    // for (Integer num : list) {
-    //   Node currNode = new Node(num);
-    // }
-    for (int i=0;i<list.size();i++) {
-      Node currNode = new Node(list.get(i));
-      Node nextNode = new Node(list.get(i+1));
-      currNode.next = nextNode;
-      nextNode.prev = currNode;
-      currNode = currNode.next;
+    if(list==null||list.size()==0){
+      throw new IllegalArgumentException();
+    }
+    Node curr = this;
+    curr.value = list.get(0);
+    for (int i = 1; i < list.size(); i++) {
+      curr.next = new Node(list.get(i));
+      curr.next.prev = curr;
+      curr=curr.next;
     }
   }
 
@@ -59,6 +60,12 @@ public class Node {
    */
   public List<Integer> toList() {
     // TODO: Implement this
-    return null;
+    List<Integer> nodeList = new ArrayList<>();
+    Node curr = this;
+    while(curr!=null){
+      nodeList.add(curr.value);
+      curr = curr.next;
+    }
+    return nodeList;
   }
 }
