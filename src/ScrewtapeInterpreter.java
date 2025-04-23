@@ -177,30 +177,20 @@ public class ScrewtapeInterpreter {
     * This interpreter provides methods to manipulate the memory tape, execute programs, and handle loops efficiently.
     */
 
+    Node Temp = tapeHead;
+    Node pointer = tapePointer;
 
-
-    //Init list to hold operations
-    List<Character> operations = new ArrayList<>();
-    operations.add('>');
-    operations.add('<');
-    operations.add('+');
-    operations.add('-');
-    operations.add('.');
-    operations.add(']');
-    operations.add('[');
 
     //Map for indexes and actions
-    Map<Character, Integer> indexMap = new HashMap<>();
+    Map<Character, List<Integer>> indexMap = new HashMap<>();
 
 
     //Loop through string with program attached
-    for(char items: program.toCharArray())
+    for(int i = 0; i < program.length(); i++)
     {
-      indexMap.put(items, program.indexOf(items));
-      if(operations.contains(items))
-      {
-        
-      }
+      char operators = program.charAt(i); //Retrieve Values
+      indexMap.putIfAbsent(operators, new ArrayList<>()); //Store Operators as Chars and add a list for said Char
+      indexMap.get(operators).add(i);//add where on the index it pops up ex "++-+" {+:[0,1,3], -:[2]}
     }  
     
 
