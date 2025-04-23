@@ -192,7 +192,31 @@ public class ScrewtapeInterpreter {
       indexMap.putIfAbsent(operators, new ArrayList<>()); //Store Operators as Chars and add a list for said Char
       indexMap.get(operators).add(i);//add where on the index it pops up ex "++-+" {+:[0,1,3], -:[2]}
     }  
-    
+
+    for(int j = 0; j < program.length(); j++)
+    {
+      if(indexMap.containsKey(program.charAt(j)))
+      {
+        if(program.charAt(j) == '+')
+        {
+          Temp.value = Temp.value + 1;
+        }
+        if(program.charAt(j) == '-')
+        {
+          Temp.value = Temp.value - 1;
+        }
+        if(program.charAt(j) == '>')
+        {
+          Temp.next = new Node(0);
+          moveTapePointerToHead();
+        }
+        if(program.charAt(j) == '<')
+        {
+          Temp.prev = new Node(0);
+          moveTapePointerToTail();
+        }
+      }
+    }
 
 
     return null;
