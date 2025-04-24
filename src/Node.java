@@ -38,7 +38,20 @@ public class Node {
    * @throws IllegalArgumentException If the list is null or empty.
    */
   public Node(List<Integer> list) {
-    // TODO: implement this
+    // check to see if its empty
+      // throw if it is
+
+    // it is not empty
+    // make a head node
+    // head value is list 0
+    // previous is nothing 
+    // just in case - next is nothing
+
+    // if there is more to list
+    // loop through list
+      // keep making new nodes because in a loop we can keep doing that
+      // shove value into it
+      // shove previous into it (probably need a current node)
   }
 
   /**
