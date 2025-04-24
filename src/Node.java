@@ -48,10 +48,12 @@ public class Node {
     this.prev = null;
     this.next = null;
 
+    // more than 1 list
     if(list.size() > 1){
       Node cur = this;
-      for(int i : list){
-        Node tempNode = new Node(i);
+      // for each doesnt work because we already made the first element a node
+      for(int i = 1; i < list.size(); i++){
+        Node tempNode = new Node(list.get(i));
         cur.next = tempNode;
         tempNode.prev = cur;
         cur = tempNode;
