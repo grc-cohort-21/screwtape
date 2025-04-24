@@ -156,53 +156,53 @@ public class ScrewtapeInterpreter {
     Character current;
     String output ="";
     while(progress < program.length()){
-      System.out.println("while loop start: " + tapeHead.toList());
+      
       current = program.charAt(progress);
       if(current == '+'){
         tapePointer.value++;
       }else if(current == '-'){
         tapePointer.value--;
       }else if(current == '>'){
-        tapePointer.next = new Node(0);
+        if(tapePointer.next == null){
+          tapePointer.next = new Node(0);
+          tapePointer.next.prev = tapePointer;
+        } 
         tapePointer = tapePointer.next;
+
+
       }else if(current == '<'){
+        System.out.println("tape val " + tapePointer.value);
+        
         if(tapePointer.prev == null){
-          tapePointer.prev = new Node(0);
-          tapePointer = tapePointer.prev;
-          tapePointer.next = tapeHead;
-          tapeHead = tapePointer;
+          Node temp = new Node(0);
+          tapeHead = temp;
+          tapePointer.prev = tapeHead;
+          tapeHead.next = tapePointer;
+          tapePointer = tapeHead;
+          
         }else{
           tapePointer = tapePointer.prev;
         }
+        System.out.println("tape val " + tapePointer.value);
       }else if(current == '['){
         
       }else if(current == ']'){
+        System.out.println("found end bracket,");
+        System.out.println("tape val " + tapePointer.value);
         if(tapePointer.value != 0){
           int loopStart = bMap.get(progress);
           int loopEnd = progress;
           int stepsBack = loopEnd - loopStart;
           System.out.println("end " + loopEnd);
-          System.out.println("start " + loopStart);
-          System.out.println(stepsBack);
-          while(stepsBack >= 0){
-            System.out.println("stepBack " + stepsBack);
-            System.out.println(tapeHead.toList());
-            if(tapePointer == null){
-              System.out.println(tapeHead.toList());
-            }
-             
-            
-              tapePointer = tapePointer.prev;
-                
-            stepsBack--;
-          }
-          progress = progress - (loopEnd-loopStart);
+          System.out.println("start " + loopStart);   
+          progress = loopStart;
         }
       } else if(current == '.'){
         int num = tapePointer.value;
         output = output +((char) num);
       }
       progress++;
+      System.out.println("while loop end: " + tapeHead.toList() + tapePointer.value + " progress " + progress);
     }
     // If you get stuck, you can look at hint.md for a hint
     return output;
