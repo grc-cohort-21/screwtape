@@ -152,6 +152,37 @@ public class ScrewtapeInterpreter {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
     
+    // System.out.println(this.tapePointer);
+    for (int i = 0; i < program.length(); i++) {
+      if (program.charAt(i) == '+') {
+        this.tapePointer.value++;
+        // System.out.println(tapePointer.value);
+      } else if (program.charAt(i) == '-') {
+        this.tapePointer.value--;
+        // System.out.println(this.tapePointer.value);
+      } else if (program.charAt(i) == '>') {
+        if (tapePointer.next == null) {
+          // System.out.println("new node created");
+          this.tapePointer.next = new Node(0);
+        }
+
+        // System.out.println("existing node movement: " + tapePointer.value);
+        this.tapePointer = this.tapePointer.next;
+      } else if (program.charAt(i) == '<') {
+        if (tapePointer.prev == null) {
+          // System.out.println("new node created");
+          this.tapePointer.prev = new Node(0);
+          this.tapePointer.prev.next = tapePointer;
+          tapeHead = tapePointer.prev;
+        }
+
+        // System.out.println("existing node movement: " + tapePointer.value);
+        this.tapePointer = this.tapePointer.prev;
+        // System.out.println(this.tapePointer);
+      } 
+  
+    }
+    System.out.println(this.getTapeData());
     return null;
   }
 }
