@@ -24,9 +24,54 @@ class ScrewtapeInterpreterTest {
   }
 
   // TODO: Implement more tests for bracketMap
-  // At a bare minimum, implement the other examples from the Javadoc and at least one more you come up with
 
-  
+  @Test
+  void testBracketMapWithBadStart() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "][+>[+-]<]";
+
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(9, 1);
+    expectedMap.put(7, 4);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> interpreter.bracketMap(program),
+        "Expected constructor to throw IllegalArgumentException.");
+  }
+
+  @Test
+  void testBracketMapWithExtraOpener() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[>[+>[+-]<]";
+
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(9, 1);
+    expectedMap.put(7, 4);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> interpreter.bracketMap(program),
+        "Expected constructor to throw IllegalArgumentException.");
+  }
+
+  @Test
+  void testBracketMapWithExtraCloser() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = ">[+>[+-]<]]";
+
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(9, 1);
+    expectedMap.put(7, 4);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> interpreter.bracketMap(program),
+        "Expected constructor to throw IllegalArgumentException.");
+  }
+
+  // At a bare minimum, implement the other examples from the Javadoc and at least
+  // one more you come up with
 
   @Test
   void testAdd() {
@@ -77,6 +122,22 @@ class ScrewtapeInterpreterTest {
     // The tape should look like: [-2, 0, 0]
     List<Integer> tapeData = interpreter.getTapeData();
     assertEquals(List.of(-2, 0, 0), tapeData);
+
+    // The tape pointer should be at the head cell, value = 2
+    assertEquals(-2, interpreter.getTapePointerValue());
+  }
+
+  @Test
+  void testRightAndSubtract() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = ">>--";
+    // Act
+    interpreter.execute(program);
+    // Assert
+    // The tape should look like: [0, 0, -2]
+    List<Integer> tapeData = interpreter.getTapeData();
+    assertEquals(List.of(0, 0, -2), tapeData);
 
     // The tape pointer should be at the head cell, value = 2
     assertEquals(-2, interpreter.getTapePointerValue());
@@ -139,7 +200,8 @@ class ScrewtapeInterpreterTest {
     // X has ASCII code 88
     // Y has ASCII code 89
     // Z has ASCII code 90
-    // The program should increase to 88, output X, then increase to 89, output Y, then increase to 90, output Z
+    // The program should increase to 88, output X, then increase to 89, output Y,
+    // then increase to 90, output Z
     assertEquals("XYZ", result);
   }
 
@@ -153,10 +215,10 @@ class ScrewtapeInterpreterTest {
     //
     // Increase value of head node to 3
     // while head > 0
-    //    move to second node
-    //    increase second node by 2
-    //    move to head node
-    //    decrease head node by 1
+    // move to second node
+    // increase second node by 2
+    // move to head node
+    // decrease head node by 1
     // move to second node
     String program = "+++[>++<-]>";
 
@@ -182,15 +244,15 @@ class ScrewtapeInterpreterTest {
     //
     // Increase value of head node to 7
     // while head > 0
-    //    move to second node
-    //    increase second node by 3
-    //    while second node > 0
-    //       move to third node
-    //       increase third node by 5
-    //       move to second node
-    //       increase decrease second node by 1
-    //    move to head node
-    //    decrease head node by 1
+    // move to second node
+    // increase second node by 3
+    // while second node > 0
+    // move to third node
+    // increase third node by 5
+    // move to second node
+    // increase decrease second node by 1
+    // move to head node
+    // decrease head node by 1
     // move to second node
     // move to third node
     // output the third node
