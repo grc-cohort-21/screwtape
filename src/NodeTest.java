@@ -45,6 +45,22 @@ class NodeTest {
   // TODO: Add test for list constructor when passed null list
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
 
+  @Test
+  void testListConstructorWithNegativeValues() {
+    // Arrange
+    List<Integer> values = List.of(-1, -2, -3);
+
+    // Act
+    Node head = new Node(values);
+
+    // Assert
+    assertEquals(-1, head.value);
+    assertEquals(-2, head.next.value);
+    assertEquals(-3, head.next.next.value);
+    assertNull(head.next.next.next);
+  }
+
+
 
   // -------- WAVE 2 -------
 
