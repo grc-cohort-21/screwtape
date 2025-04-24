@@ -38,18 +38,21 @@ public class Node {
    * @throws IllegalArgumentException If the list is null or empty.
    */
   public Node(List<Integer> list) {
-    int index = 0;
-    Node current = new Node(list.get(index));
 
     if(list.size() > 0)
     {
       this.value = list.get(0);
     }
+    Node current = this;
+
+    for(int i = 1; i < list.size(); i++)
+    {
+      Node newNode = new Node(list.get(i));
+      current.next = newNode;
+      newNode.prev = current;
+      current = newNode;
+    }
     
-    next = new Node(list.get(++index));
-    next.next = new Node(list.get(++index));
-    prev = new Node(list.get(--index));
-    next.prev =  new Node(list.get(index));
     
     // TODO: implement this
   }
@@ -61,6 +64,11 @@ public class Node {
    * @return A list of integers representing the values in the linked list.
    */
   public List<Integer> toList() {
+    List<Integer> list = new List<>();
+     Node current = this; 
+     list.add(current.value);
+
+    
     // TODO: Implement this
     return null;
   }
