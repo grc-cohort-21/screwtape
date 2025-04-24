@@ -40,10 +40,35 @@ class NodeTest {
         "Expected constructor to throw IllegalArgumentException for an empty list."
     );
   }
-
   
   // TODO: Add test for list constructor when passed null list
+  @Test
+  void testListConstructorWithNullList() {
+    
+    // Arrange, Act and Assert
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> new Node(null),
+        "Expected constructor to throw IllegalArgumentException for a null list."
+    );
+  }
+
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  @Test
+  void testListConstructorWithNullValueInList() {
+    // Arrange
+    List<Integer> values = new ArrayList<>();
+    values.add(5);
+    values.add(null);
+    values.add(3);
+
+    // Act and Assert
+    assertThrows(
+        NullPointerException.class,
+        () -> new Node(values),
+        "Expected constructor to throw  NullPointerException for a list containing null values."
+    );
+  }
 
 
   // -------- WAVE 2 -------
