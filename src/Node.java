@@ -61,6 +61,17 @@ public class Node {
    */
   public List<Integer> toList() {
     // TODO: Implement this
-    return null;
+    Node current = this;
+
+    while (current.prev != null) {
+      current = current.prev;
+    }
+
+    List<Integer> result = new java.util.ArrayList<>();
+    while (current != null) {
+      result.add(current.value);
+      current = current.next;
+    }
+    return result;
   }
 }
