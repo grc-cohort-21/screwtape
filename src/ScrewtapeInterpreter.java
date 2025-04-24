@@ -151,38 +151,35 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
-    
+    StringBuilder output = new StringBuilder();
+
     // System.out.println(this.tapePointer);
     for (int i = 0; i < program.length(); i++) {
       if (program.charAt(i) == '+') {
-        this.tapePointer.value++;
-        // System.out.println(tapePointer.value);
+        tapePointer.value++;
       } else if (program.charAt(i) == '-') {
-        this.tapePointer.value--;
-        // System.out.println(this.tapePointer.value);
+        tapePointer.value--;
       } else if (program.charAt(i) == '>') {
         if (tapePointer.next == null) {
-          // System.out.println("new node created");
-          this.tapePointer.next = new Node(0);
+          Node newNode = new Node(0);
+          tapePointer.next = newNode;
+          newNode.prev = tapePointer;
         }
-
-        // System.out.println("existing node movement: " + tapePointer.value);
-        this.tapePointer = this.tapePointer.next;
+        tapePointer = tapePointer.next;
       } else if (program.charAt(i) == '<') {
         if (tapePointer.prev == null) {
-          // System.out.println("new node created");
-          this.tapePointer.prev = new Node(0);
-          this.tapePointer.prev.next = tapePointer;
-          tapeHead = tapePointer.prev;
+          Node newNode = new Node(0);
+          tapePointer.prev = newNode;
+          newNode.next = tapePointer;
+          tapeHead = newNode;
         }
-
-        // System.out.println("existing node movement: " + tapePointer.value);
-        this.tapePointer = this.tapePointer.prev;
-        // System.out.println(this.tapePointer);
-      } 
-  
-    }
-    System.out.println(this.getTapeData());
-    return null;
+        tapePointer = tapePointer.prev;
+      }  else if (program.charAt(i) == '.') {
+        output.append((char) tapePointer.value);
+      } else {
+        throw new IllegalArgumentException("Invalid Program Character: " + program.charAt(i));
+      }
+     } 
+    return output.toString();
   }
 }
