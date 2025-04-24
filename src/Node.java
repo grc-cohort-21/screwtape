@@ -43,18 +43,15 @@ public class Node {
       throw new IllegalArgumentException();
     }
 
-    // value = list.get(0);
+    value = list.get(0);
+    Node current = this;
 
-    Node head = new Node(list.get(0));
-    Node current = head;
-    // int index = 1;
-
-    for (int i = 1; i < list.size(); i++) {
-      current.next = new Node(list.get(i));
-      current.next.prev = current;
+    for (int i = 0; i < list.size() - 1; i++) {
+      Node nextNode = new Node(list.get(i + 1));
+      current.next = nextNode;
+      nextNode.prev = current;
       current = current.next;
     }
-
   }
 
   /**
