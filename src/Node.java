@@ -77,15 +77,15 @@ public class Node {
    *
    * @return A list of integers representing the values in the linked list.
    */
-  public List<Integer> toList() {
+  public List<Integer> toList() 
+  {
     // TODO: Implement this
     List<Integer> intList = new ArrayList<>();
     Node current = this;
 
-    while(current!=null)
-    {
-      intList.add(current.value);
-      current = current.next;
+    while (current != null) {
+        intList.add(current.value);
+        current = current.next;
     }
 
     return intList;
