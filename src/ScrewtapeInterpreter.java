@@ -177,9 +177,6 @@ public class ScrewtapeInterpreter {
     * This interpreter provides methods to manipulate the memory tape, execute programs, and handle loops efficiently.
     */
 
-    Node Temp = tapeHead;
-    Node pointer = tapePointer;
-
 
     for(int j = 0; j < program.length(); j++)
     {
@@ -188,38 +185,38 @@ public class ScrewtapeInterpreter {
 
         if(tapeScrew == '+')
         {
-          Temp.value = Temp.value + 1;
+          tapePointer.value++;
         }
         else if(tapeScrew == '-')
         {
-          Temp.value = Temp.value - 1;
+          tapePointer.value--;
         }
 
         else if(tapeScrew == '>')
         {
-          if(pointer.next == null)
+          if(tapePointer.next == null)
           {
-            pointer.next = new Node(0);
-            pointer.next.prev = pointer;
+            tapePointer.next = new Node(0);
+            tapePointer.next.prev = tapePointer;
           }
-          pointer = pointer.next;
+          tapePointer = tapePointer.next;
         }
 
         else if(tapeScrew == '<')
         {
-          if(pointer.prev == null)
+          if(tapePointer.prev == null)
           {
             Node previousNode = new Node(0);
-            previousNode.next = pointer;
-            pointer.prev = previousNode;
-            Temp = previousNode;
+            previousNode.next = tapePointer;
+            tapePointer.prev = previousNode;
+            tapeHead = previousNode;
           }
-          pointer = pointer.prev;
+          tapePointer = tapePointer.prev;
         }
+        
       
     }
 
-
-    return Temp.toString();
+    return tapeHead.toString();
   }
 }
