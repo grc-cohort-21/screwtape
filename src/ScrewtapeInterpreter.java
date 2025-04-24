@@ -186,7 +186,16 @@ public class ScrewtapeInterpreter {
       
         char tapeScrew = program.charAt(j); 
 
-        if(tapeScrew == '>')
+        if(tapeScrew == '+')
+        {
+          Temp.value = Temp.value + 1;
+        }
+        else if(tapeScrew == '-')
+        {
+          Temp.value = Temp.value - 1;
+        }
+
+        else if(tapeScrew == '>')
         {
           if(pointer.next == null)
           {
@@ -195,22 +204,17 @@ public class ScrewtapeInterpreter {
           }
           pointer = pointer.next;
         }
+
         else if(tapeScrew == '<')
         {
           if(pointer.prev == null)
           {
-            pointer.prev = new Node(0);
-            pointer.prev.next = pointer;
+            Node previousNode = new Node(0);
+            previousNode.next = pointer;
+            pointer.prev = previousNode;
+            Temp = previousNode;
           }
           pointer = pointer.prev;
-        }
-        else if(tapeScrew == '-')
-        {
-          pointer.value = pointer.value - 1;
-        }
-        else if(tapeScrew == '+')
-        {
-          pointer.value = pointer.value + 1;
         }
       
     }
