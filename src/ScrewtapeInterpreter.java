@@ -154,7 +154,9 @@ public class ScrewtapeInterpreter {
     Map<Integer,Integer> bMap = bracketMap(program);
     int progress = 0;
     Character current;
+    String output ="";
     while(progress < program.length()){
+      System.out.println("while loop start: " + tapeHead.toList());
       current = program.charAt(progress);
       if(current == '+'){
         tapePointer.value++;
@@ -179,16 +181,31 @@ public class ScrewtapeInterpreter {
           int loopStart = bMap.get(progress);
           int loopEnd = progress;
           int stepsBack = loopEnd - loopStart;
-          while(stepsBack > 0){
-            tapePointer = tapePointer.prev;
-            progress --;
+          System.out.println("end " + loopEnd);
+          System.out.println("start " + loopStart);
+          System.out.println(stepsBack);
+          while(stepsBack >= 0){
+            System.out.println("stepBack " + stepsBack);
+            System.out.println(tapeHead.toList());
+            if(tapePointer == null){
+              System.out.println(tapeHead.toList());
+            }
+             
+            
+              tapePointer = tapePointer.prev;
+                
+            stepsBack--;
           }
+          progress = progress - (loopEnd-loopStart);
         }
+      } else if(current == '.'){
+        int num = tapePointer.value;
+        output = output +((char) num);
       }
       progress++;
     }
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    return output;
   }
   
 }
