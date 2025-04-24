@@ -38,16 +38,25 @@ public class Node {
    * @throws IllegalArgumentException If the list is null or empty.
    */
   public Node(List<Integer> list) {
-    // check to see if its empty
-      // throw if it is
+    // empty list
+    if(list.isEmpty()){
+      throw new IllegalArgumentException("Cannot be empty list");
+    }
 
-    // it is not empty
-    // make a head node
-    // head value is list 0
-    // previous is nothing 
-    // just in case - next is nothing
+    // atleast 1 list
+    this.value = list.get(0);
+    this.prev = null;
+    this.next = null;
 
-    // if there is more to list
+    if(list.size() > 1){
+      Node cur = this;
+      for(int i : list){
+        Node tempNode = new Node(i);
+        cur.next = tempNode;
+        tempNode.prev = cur;
+        cur = tempNode;
+      }
+    }
     // loop through list
       // keep making new nodes because in a loop we can keep doing that
       // shove value into it
