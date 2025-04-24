@@ -55,7 +55,7 @@ public class Node {
           nextNode.prev = current;
           current = nextNode;
       }//end for
-    }//end Nose
+    }//end Node
 
   /**
    * Converts the linked list starting from this node into a list of integers.
