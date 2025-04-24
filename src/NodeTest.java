@@ -88,5 +88,39 @@ class NodeTest {
   }
 
   // TODO: Add test for Node with no next or prev
+
+  @Test
+  void testNoNextNoPrevNode() {
+
+    // Arrange
+      Node single = new Node(42);
+
+    // Act
+      List<Integer> value = single.toList();
+
+    // Assert
+      assertEquals(List.of(42), value);
+  }
+
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
-}
+
+  @Test
+  void testLongList() {
+    // Arrange
+      List<Integer> values = List.of(1, 2, 3, 4, 5, 6);
+  
+    // Act
+      Node head = new Node(values);
+      Node current = head;
+
+        for (int i = 0; i < 3; i++) {
+          current = current.next;
+        }//end for
+  
+    // Assert
+      assertEquals(4, current.value);
+      assertEquals(3, current.prev.value);
+      assertEquals(5, current.next.value);
+  }
+  
+}//end nodeTest
