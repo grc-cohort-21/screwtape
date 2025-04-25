@@ -64,6 +64,7 @@ public class Node {
    * @return A list of integers representing the values in the linked list.
    */
   public List<Integer> toList() {
+
     List<Integer> nodeList = new ArrayList<>();
 
     Node current = this;

@@ -91,6 +91,15 @@ class NodeTest {
 
     assertEquals(List.of(39), values);
   }
+
   // TODO: Add at least one more test for list constructor that would be useful
   // and cover new ground.
+  @Test
+  void testToListWithNegativeValues() {
+    Node head = new Node(List.of(-39, -2, -1));
+
+    List<Integer> negativeList = head.toList();
+
+    assertEquals(List.of(-39, -2, -1), negativeList);
+  }
 }
