@@ -88,7 +88,7 @@ class NodeTest {
     assertEquals(List.of(5, 7, 3), values);
   }
 
-  // TODO: Add test for Node with no next or prev
+  
   @Test
   void testToListForSingleNode() {
     Node head = new Node(5);

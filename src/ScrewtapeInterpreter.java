@@ -107,8 +107,6 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public Map<Integer, Integer> bracketMap(String program) {
-    // TODO: Implement this
-    // Hint: use a stack
 
     Stack<Integer> stack = new Stack<>();
     Map<Integer, Integer> map = new HashMap<>();
@@ -149,9 +147,9 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public String execute(String program) {
-    // TODO: Implement this
-    // If you get stuck, you can look at hint.md for a hint
+
     StringBuilder output = new StringBuilder();
+    Map<Integer, Integer> bracketMap = bracketMap(program);
 
     // System.out.println(this.tapePointer);
     for (int i = 0; i < program.length(); i++) {
@@ -176,6 +174,12 @@ public class ScrewtapeInterpreter {
         tapePointer = tapePointer.prev;
       }  else if (program.charAt(i) == '.') {
         output.append((char) tapePointer.value);
+      } else if (program.charAt(i) == '[') {
+        continue;
+      } else if (program.charAt(i) == ']') {
+        if (bracketMap.containsKey(i) && tapePointer.value != 0) {
+          i = bracketMap.get(i);
+        }
       } else {
         throw new IllegalArgumentException("Invalid Program Character: " + program.charAt(i));
       }
