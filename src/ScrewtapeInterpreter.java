@@ -158,6 +158,66 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    String output = "";
+    Map<Integer,Integer> programMap = bracketMap(program);
+    
+    for(int i = 0; i<program.length(); i++)
+    {
+      char ch = program.charAt(i);
+      
+      if(ch == '+')
+      {
+        tapePointer.value++;
+      }
+     
+      else if(ch == '-')
+      {
+        tapePointer.value--;
+      }
+      
+      else if(ch == '>')
+      {
+        if(tapePointer.next == null)
+        {
+          Node newNode = new Node(0);
+          tapePointer.next = newNode;
+          newNode.prev = tapePointer;
+          newNode.next = null;
+          tapePointer = newNode;
+        }
+        else{
+          tapePointer = tapePointer.next;
+        }
+
+      }
+
+      else if(ch == '<')
+      {
+        if(tapePointer.prev == null)
+        {
+          Node newNode = new Node(0);
+          newNode.next = tapePointer;
+          tapePointer.prev = newNode;
+          tapePointer = newNode;
+          tapeHead = newNode;
+        }
+        else
+        {
+          tapePointer = tapePointer.prev;
+        }
+
+      }
+      else if(ch == ']' && tapePointer.value !=0)
+      {
+        i = programMap.get(i);
+      }
+      
+      else if(ch == '.')
+      {
+        output += (char) tapePointer.value;
+      }
+
+    }
+    return output;
   }
 }
