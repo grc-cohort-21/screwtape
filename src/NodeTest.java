@@ -56,7 +56,19 @@ class NodeTest {
     );
   }
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  @Test
+  void testListConstructorWithOneValue() {
+    // Arrange
+    List<Integer> values = List.of(5);
 
+    // Act
+    Node head = new Node(values);
+
+    // Assert
+    assertEquals(5, head.value);
+    assertNull(head.next);
+    assertNull(head.prev);
+  }
 
   // -------- WAVE 2 -------
 

@@ -53,28 +53,30 @@ public class Node {
       throw new IllegalArgumentException("Empty List");
     
 
-    Node pastNode = new Node(0); //dummy value that will be overwritten
+    Node pastNode = new Node(0); //dummy initial value that will be overwritten
     for(int i = 0; i < list.size(); i++)
     {
-      this.value = list.get(i);
       if(i == 0)
       {
-        pastNode.next = this;
+        //pastNode.next = this;
+        this.value = list.get(i);
         pastNode = this;
         pastNode.prev = null;
 
       }
       else if (i == list.size()-1)
       {
-        pastNode.next = this;
-        this.prev = pastNode;
-        this.next = null;
+        Node node = new Node(list.get(i));
+        pastNode.next = node;
+        node.prev = pastNode;
+        node.next = null;
       }
       else
       {
-        this.prev = pastNode;
-        pastNode.next = this;
-        pastNode = this;
+        Node node = new Node(list.get(i));
+        node.prev = pastNode;
+        pastNode.next = node;
+        pastNode = node;
       }      
     }
   }
