@@ -83,6 +83,14 @@ class NodeTest {
   }
 
   // TODO: Add test for Node with no next or prev
+  @Test
+  void testToListWithOneValue() {
+    Node head = new Node(39);
+
+    List<Integer> values = head.toList();
+
+    assertEquals(List.of(39), values);
+  }
   // TODO: Add at least one more test for list constructor that would be useful
   // and cover new ground.
 }
