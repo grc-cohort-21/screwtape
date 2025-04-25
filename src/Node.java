@@ -38,21 +38,20 @@ public class Node {
    * @param list The list of integers to initialize the doubly linked list.
    * @throws IllegalArgumentException If the list is null or empty.
    */
-  public Node(List<Integer> list) {
-    // TODO: implement this
-
-  if(list == null || list.isEmpty())
+  public Node(List<Integer> list) 
   {
-    throw new IllegalArgumentException("Input list cannot be null or empty.");
-  }
-
-  if (list.get(0) == null) {
-    throw new NullPointerException("Input list cannot contain null values.");
-  }
+    // TODO: implement this
+    if(list == null || list.isEmpty())
+    {
+      throw new IllegalArgumentException("Input list cannot be null or empty.");
+    }
+    if (list.get(0) == null) 
+    {
+      throw new NullPointerException("Input list cannot contain null values.");
+    }
     this.value = list.get(0);
     Node current = this;
-    Node previous = this;
-        
+    Node previous = this; 
     for(int i = 1; i<list.size(); i++)
     {
       Integer num = list.get(i);
@@ -68,8 +67,6 @@ public class Node {
     }
   }
   
-  
-
 
   /**
    * Converts the linked list starting from this node into a list of integers.
@@ -82,12 +79,11 @@ public class Node {
     // TODO: Implement this
     List<Integer> intList = new ArrayList<>();
     Node current = this;
-
-    while (current != null) {
-        intList.add(current.value);
-        current = current.next;
+    while (current != null) 
+    {
+      intList.add(current.value);
+      current = current.next;
     }
-
     return intList;
   }
 }
