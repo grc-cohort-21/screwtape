@@ -92,5 +92,49 @@ class NodeTest {
   }
 
   // TODO: Add test for Node with no next or prev
+  @Test
+  void testToListWithOneValueNoNextOrPrev() {
+    // Arrange
+    Node head = new Node(5);
+
+    // Act
+    List<Integer> values = head.toList();
+
+    // Assert
+    assertEquals(List.of(5), values);
+  }
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  @Test
+  void testToListWithTwoValueWithNexNoPrev() {
+    // Arrange
+    Node head = new Node(5);
+    Node middle = new Node(7);
+    //Node tail = new Node(3);
+
+    head.next = middle;
+    middle.next = null;
+
+    // Act
+    List<Integer> values = head.toList();
+
+    // Assert
+    assertEquals(List.of(5, 7), values);
+  }
+
+  @Test
+  void testToListWithTwoValueWithPrevNoNext() {
+    // Arrange
+    Node head = new Node(5);
+    Node middle = new Node(7);
+    //Node tail = new Node(3);
+
+    head.prev = null;
+    middle.prev = head;
+
+    // Act
+    List<Integer> values = head.toList();
+
+    // Assert
+    assertEquals(List.of(5), values);
+  }
 }
