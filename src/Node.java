@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -89,6 +90,22 @@ public class Node {
    */
   public List<Integer> toList() {
     // TODO: Implement this
-    return null;
+    
+    //reverse of what was just done but perhaps simpler
+    //while loop to walk theough linked list using next to move forward
+    //add each value from nodes to list
+    //return list
+
+    List <Integer> list = new ArrayList<>();
+
+    Node node = this;
+
+    while(node != null)
+    {
+      list.add(node.value);
+      node = node.next;
+    }
+
+    return list;
   }
 }
