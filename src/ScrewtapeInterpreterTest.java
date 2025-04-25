@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,21 +14,71 @@ class ScrewtapeInterpreterTest {
     // Arrange
     ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
     String program = ">[+>[+-]<]";
-
     Map<Integer, Integer> expectedMap = new HashMap<>();
     expectedMap.put(9, 1);
     expectedMap.put(7, 4);
-
+    // Act
     Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
-
+    //Assert
     assertEquals(expectedMap, actualMap);
   }
 
   // TODO: Implement more tests for bracketMap
   // At a bare minimum, implement the other examples from the Javadoc and at least one more you come up with
+  @Test
+  void testNestedBracketMapOneBracketPair() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[]";
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(1, 0);
+    //Act
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+    //Assert
+    assertEquals(expectedMap, actualMap);
+  }
 
+  @Test
+  void testNestedBracketMapThreeBracketPairs() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[+++][---]<<[+]";
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(4, 0);
+    expectedMap.put(9, 5);
+    expectedMap.put(14, 12);
+    //Act
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+    //Assert
+    assertEquals(expectedMap, actualMap);
+  }
   
+  @Test
+  void testNestedBracketUnmatchedOpeningBracket() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[+++[][---]<<[+]";
+    // Act and Assert
+    assertThrows(
+      IllegalArgumentException.class,
+      () -> interpreter.bracketMap(program),
+      "Expected method to throw IllegalArgumentException for a program with unmatched opening brackets."
+    );
+  }
 
+  @Test
+  void testNestedBracketUnmatchedClosingBracket() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[+++]---]<<[+]";
+    // Act and Assert
+    assertThrows(
+      IllegalArgumentException.class,
+      () -> interpreter.bracketMap(program),
+      "Expected method to throw IllegalArgumentException for a program with unmatched closing brackets."
+    );
+  }
+ 
   @Test
   void testAdd() {
     // Arrange
