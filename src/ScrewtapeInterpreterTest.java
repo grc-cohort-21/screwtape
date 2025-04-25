@@ -24,9 +24,20 @@ class ScrewtapeInterpreterTest {
   }
 
   // TODO: Implement more tests for bracketMap
-  // At a bare minimum, implement the other examples from the Javadoc and at least one more you come up with
+  // At a bare minimum, implement the other examples from the Javadoc and at least
+  // one more you come up with
+  @Test
+  void testSinglePairBracketMap() {
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
 
-  
+    String program = "[]";
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(1, 0);
+
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+    assertEquals(expectedMap, actualMap);
+  }
 
   @Test
   void testAdd() {
@@ -121,7 +132,8 @@ class ScrewtapeInterpreterTest {
     // X has ASCII code 88
     // Y has ASCII code 89
     // Z has ASCII code 90
-    // The program should increase to 88, output X, then increase to 89, output Y, then increase to 90, output Z
+    // The program should increase to 88, output X, then increase to 89, output Y,
+    // then increase to 90, output Z
     assertEquals("XYZ", result);
   }
 
@@ -135,10 +147,10 @@ class ScrewtapeInterpreterTest {
     //
     // Increase value of head node to 3
     // while head > 0
-    //    move to second node
-    //    increase second node by 2
-    //    move to head node
-    //    decrease head node by 1
+    // move to second node
+    // increase second node by 2
+    // move to head node
+    // decrease head node by 1
     // move to second node
     String program = "+++[>++<-]>";
 
@@ -164,15 +176,15 @@ class ScrewtapeInterpreterTest {
     //
     // Increase value of head node to 7
     // while head > 0
-    //    move to second node
-    //    increase second node by 3
-    //    while second node > 0
-    //       move to third node
-    //       increase third node by 5
-    //       move to second node
-    //       increase decrease second node by 1
-    //    move to head node
-    //    decrease head node by 1
+    // move to second node
+    // increase second node by 3
+    // while second node > 0
+    // move to third node
+    // increase third node by 5
+    // move to second node
+    // increase decrease second node by 1
+    // move to head node
+    // decrease head node by 1
     // move to second node
     // move to third node
     // output the third node
