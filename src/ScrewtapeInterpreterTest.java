@@ -59,6 +59,21 @@ void testMultipleBracketPairs() {
 }
 
 
+
+@Test
+void testEmptyProgramBracketMap() {
+  // Arrange
+  ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+  String program = "";
+
+  Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+  // Assert
+  assertTrue(actualMap.isEmpty());
+}
+
+
+
   
 
   @Test
