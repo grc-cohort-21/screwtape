@@ -139,7 +139,7 @@ public class ScrewtapeInterpreter {
 
   if (!unmatchedIndex.isEmpty()) {
     StringBuilder message = new StringBuilder("Error: Unmatched brackets at index: ");
-    
+
     for (int j = 0; j < unmatchedIndex.size(); j++) {
       message.append(unmatchedIndex.get(j));
 
@@ -156,7 +156,6 @@ public class ScrewtapeInterpreter {
 }//end bracketMap
 
   
-
   /**
    * Executes a Screwtape program and returns the output as a string.
    * 
@@ -176,8 +175,60 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public String execute(String program) {
-    // TODO: Implement this
-    // If you get stuck, you can look at hint.md for a hint
-    return null;
+    StringBuilder output = new StringBuilder();
+      Map<Integer, Integer> bracketMap = bracketMap(program);
+        int instructionPointer = 0;
+
+while (instructionPointer < program.length()) {
+  char currentChar = program.charAt(instructionPointer);
+
+switch (currentChar) {
+case '>':
+  if (tapePointer.next == null) {
+    tapePointer.next = new Node(0);
+    tapePointer.next.prev = tapePointer;
   }
+    tapePointer = tapePointer.next;
+      break;
+
+case '<':
+  if (tapePointer.prev == null) {
+    tapePointer.prev = new Node(0);
+    tapePointer.prev.next = tapePointer;
+  }
+    tapePointer = tapePointer.prev;
+      break;
+
+case '+':
+  tapePointer.value++;
+    break;
+
+case '-':
+  tapePointer.value--;
+    break;
+
+case '.':
+  output.append((char) (tapePointer.value % 256));
+    break;
+
+case '[':
+  break;
+
+case ']':
+  if (tapePointer.value != 0) {
+    instructionPointer = bracketMap.get(instructionPointer);
+  }
+    break;
 }
+
+  instructionPointer++;
+}
+
+  return output.toString();
+}
+
+  
+
+}//end ScrewtapeInterpreter
+
+
