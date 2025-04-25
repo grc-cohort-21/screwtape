@@ -20,10 +20,10 @@ class NodeTest {
     // Assert
     assertEquals(5, head.value);
     assertNotNull(head.next);
-    //assertEquals(7, head.next.value);
+    assertEquals(7, head.next.value);
     assertNotNull(head.next.next);
-    //assertEquals(3, head.next.next.value);
-    //assertNull(head.next.next.next);
+    assertEquals(3, head.next.next.value);
+    assertNull(head.next.next.next);
     assertEquals(head, head.next.prev);
     assertEquals(head.next, head.next.next.prev);
   }
@@ -43,6 +43,18 @@ class NodeTest {
 
   
   // TODO: Add test for list constructor when passed null list
+  @Test
+  void testListConstructorWithNullList() {
+    // Arrange
+    List<Integer> nullList = null;
+
+    // Act and Assert
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> new Node(nullList),
+        "Expected constructor to throw IllegalArgumentException for an null list."
+    );
+  }
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
 
 

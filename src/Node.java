@@ -45,32 +45,37 @@ public class Node {
     //next pointer points to new node created using next element in list
     //prev prointer points back to node before current node
     
+    //null or empty list
+    if(list == null)
+      throw new IllegalArgumentException("Null list");
+        
+    if(list.isEmpty())
+      throw new IllegalArgumentException("Empty List");
+    
+
     Node pastNode = new Node(0); //dummy value that will be overwritten
-    //for(int i = 0; i < list.size(); i++)
-    for(int i = list.size()-1; i >= 0; i--)
+    for(int i = 0; i < list.size(); i++)
     {
       this.value = list.get(i);
-      
-      //beginning of list
       if(i == 0)
       {
-        //this.next = null;
-        pastNode = this; //new node becomes past node (no other nodes to point toward or back to yet)
-      }
-      if(i == list.size()-1)
-      {
-        this.next = null;
-        this.prev = pastNode;
-      }
-      
-      //middle of list
-      else  
-      {
-        pastNode.prev = this; //prev node point to new next node
-        this.next = pastNode; //new node point back to prev node
+        pastNode.next = this;
+        pastNode = this;
+        pastNode.prev = null;
 
-        pastNode = this; //new node becomes past node
       }
+      else if (i == list.size()-1)
+      {
+        pastNode.next = this;
+        this.prev = pastNode;
+        this.next = null;
+      }
+      else
+      {
+        this.prev = pastNode;
+        pastNode.next = this;
+        pastNode = this;
+      }      
     }
   }
 

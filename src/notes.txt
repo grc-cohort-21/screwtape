@@ -8,14 +8,22 @@ wvae 3:
 
 
 
-
-    //empty list
-      // if(lSize == 0)
-      // {
-      //   throw IllegalArgumentException("Empty List");
-      // }
-      // //null list
-      // if(list == null)
-      // {
-      //   throw IllegalArgumentException("Null list");
-      // }
+//beginning of list
+      if(i == 0)
+      {
+        this.prev = null;
+        pastNode = this; //new node becomes past node (no other nodes to point toward or back to yet)
+      }
+      if(i == list.size()-1)
+      {
+        this.next = null;
+        this.next.prev = pastNode;
+      }
+      
+      //middle of list
+      else  
+      {
+        this.next = pastNode; //new node point back to prev node
+        pastNode.next.prev = pastNode;
+        pastNode = this; //new node becomes past node
+      }
