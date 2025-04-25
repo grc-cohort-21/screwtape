@@ -1,5 +1,8 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * A Screwtape interpreter that executes programs written in the Screwtape esoteric programming language.
@@ -107,9 +110,52 @@ public class ScrewtapeInterpreter {
   public Map<Integer, Integer> bracketMap(String program) {
     // TODO: Implement this
     // Hint: use a stack
-    return null;
-  }
 
+  Map<Integer, Integer> nodeMap = new HashMap<>();
+    Stack<Integer> nodeStack = new Stack<>();
+      List<Integer> unmatchedIndex = new ArrayList<>();
+
+  for (int i = 0; i < program.length(); i++) {
+    char c = program.charAt(i);
+
+    if (c == '[') {
+      nodeStack.push(i);
+
+    }//end if
+    else if (c == ']') {
+      if (nodeStack.isEmpty()) {
+        unmatchedIndex.add(i);
+
+      }//end if2
+      else {
+        int openIndex = nodeStack.pop();
+        nodeMap.put(i, openIndex);
+
+      }//end else
+    }//end else if
+  }//end for
+
+  unmatchedIndex.addAll(nodeStack);
+
+  if (!unmatchedIndex.isEmpty()) {
+    StringBuilder message = new StringBuilder("Error: Unmatched brackets at index: ");
+
+    for (int j = 0; j < unmatchedIndex.size(); j++) {
+      message.append(unmatchedIndex.get(j));
+
+      if (j < unmatchedIndex.size() -1) {
+        message.append(", ");
+
+      }//end if3
+    }//end for2
+    throw new IllegalArgumentException(message.toString());
+
+  }//end if4
+
+  return nodeMap;
+}//end bracketMap
+
+  
   /**
    * Executes a Screwtape program and returns the output as a string.
    * 
@@ -129,8 +175,60 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public String execute(String program) {
-    // TODO: Implement this
-    // If you get stuck, you can look at hint.md for a hint
-    return null;
+    StringBuilder output = new StringBuilder();
+      Map<Integer, Integer> bracketMap = bracketMap(program);
+        int instructionPointer = 0;
+
+while (instructionPointer < program.length()) {
+  char currentChar = program.charAt(instructionPointer);
+
+switch (currentChar) {
+case '>':
+  if (tapePointer.next == null) {
+    tapePointer.next = new Node(0);
+    tapePointer.next.prev = tapePointer;
   }
+    tapePointer = tapePointer.next;
+      break;
+
+case '<':
+  if (tapePointer.prev == null) {
+    tapePointer.prev = new Node(0);
+    tapePointer.prev.next = tapePointer;
+  }
+    tapePointer = tapePointer.prev;
+      break;
+
+case '+':
+  tapePointer.value++;
+    break;
+
+case '-':
+  tapePointer.value--;
+    break;
+
+case '.':
+  output.append((char) (tapePointer.value % 256));
+    break;
+
+case '[':
+  break;
+
+case ']':
+  if (tapePointer.value != 0) {
+    instructionPointer = bracketMap.get(instructionPointer);
+  }
+    break;
 }
+
+  instructionPointer++;
+}
+
+  return output.toString();
+}
+
+  
+
+}//end ScrewtapeInterpreter
+
+
