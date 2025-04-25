@@ -49,7 +49,8 @@ public class Node
   {
     // TODO: implement this
     //This happens first so it can catch any null or empty, making sure the list is valid
-    if (list.isEmpty() || list == null)
+    // || left side runs first....cannot do isEmpty on something null
+    if (list == null || list.isEmpty())
     {
      
         throw new IllegalArgumentException();
