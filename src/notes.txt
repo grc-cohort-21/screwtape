@@ -5,3 +5,17 @@ wvae 3:
     to translate the code into java
 
     using a map? to track the closing brackets see wave 3 instructions
+
+
+
+
+    //empty list
+      // if(lSize == 0)
+      // {
+      //   throw IllegalArgumentException("Empty List");
+      // }
+      // //null list
+      // if(list == null)
+      // {
+      //   throw IllegalArgumentException("Null list");
+      // }

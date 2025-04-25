@@ -39,6 +39,39 @@ public class Node {
    */
   public Node(List<Integer> list) {
     // TODO: implement this
+
+    //for loop using given list as index
+    //head is first node created using first element in given list
+    //next pointer points to new node created using next element in list
+    //prev prointer points back to node before current node
+    
+    Node pastNode = new Node(0); //dummy value that will be overwritten
+    //for(int i = 0; i < list.size(); i++)
+    for(int i = list.size()-1; i >= 0; i--)
+    {
+      this.value = list.get(i);
+      
+      //beginning of list
+      if(i == 0)
+      {
+        //this.next = null;
+        pastNode = this; //new node becomes past node (no other nodes to point toward or back to yet)
+      }
+      if(i == list.size()-1)
+      {
+        this.next = null;
+        this.prev = pastNode;
+      }
+      
+      //middle of list
+      else  
+      {
+        pastNode.prev = this; //prev node point to new next node
+        this.next = pastNode; //new node point back to prev node
+
+        pastNode = this; //new node becomes past node
+      }
+    }
   }
 
   /**
