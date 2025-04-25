@@ -96,5 +96,20 @@ void testListConstructorWithOneValue()
   }
 
   // TODO: Add test for Node with no next or prev
+  @Test
+  void testToList()
+  {
+    //this is the node object named node1 which passed in with value 1 to test with....
+    Node node1 = new Node(1);
+
+    //create a list called answers 
+    //...method toList which is the name of the method 
+    List<Integer> answers = node1.toList();
+
+    //assertEquals(expected, results)...runs the test arguments
+    assertEquals(List.of(1), answers); 
+  }
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  
+
 }

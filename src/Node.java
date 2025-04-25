@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -84,6 +85,8 @@ public class Node
     }
 
   }
+
+
   /**
    * Converts the linked list starting from this node into a list of integers.
    * Treats this node as the head, even if it has a previous value.
@@ -93,7 +96,20 @@ public class Node
   public List<Integer> toList() 
   {
     // TODO: Implement this
-    return null;
+    List<Integer> val = new ArrayList<>();
+
+
+    //create a node variable called current
+    //this is referring to the instance of the entire instance of node instead of just a field. 
+    Node current = this;
+
+    while (current != null)
+    {
+      val.add(current.value);
+      current = current.next;
+    }
+
+    return val;
   }
 
 }
