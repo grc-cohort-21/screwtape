@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,9 +38,35 @@ public class Node {
    * @param list The list of integers to initialize the doubly linked list.
    * @throws IllegalArgumentException If the list is null or empty.
    */
-  public Node(List<Integer> list) {
+  public Node(List<Integer> list) 
+  {
     // TODO: implement this
+    if(list == null || list.isEmpty())
+    {
+      throw new IllegalArgumentException("Input list cannot be null or empty.");
+    }
+    if (list.get(0) == null) 
+    {
+      throw new NullPointerException("Input list cannot contain null values.");
+    }
+    this.value = list.get(0);
+    Node current = this;
+    Node previous = this; 
+    for(int i = 1; i<list.size(); i++)
+    {
+      Integer num = list.get(i);
+      
+      if(num == null)
+      {
+        throw new NullPointerException("Input list cannot contain null values.");
+      }
+      current.next = new Node(num);
+      current = current.next;
+      current.prev = previous;
+      previous = current;
+    }
   }
+  
 
   /**
    * Converts the linked list starting from this node into a list of integers.
@@ -47,8 +74,16 @@ public class Node {
    *
    * @return A list of integers representing the values in the linked list.
    */
-  public List<Integer> toList() {
+  public List<Integer> toList() 
+  {
     // TODO: Implement this
-    return null;
+    List<Integer> intList = new ArrayList<>();
+    Node current = this;
+    while (current != null) 
+    {
+      intList.add(current.value);
+      current = current.next;
+    }
+    return intList;
   }
 }
