@@ -5,25 +5,3 @@ wvae 3:
     to translate the code into java
 
     using a map? to track the closing brackets see wave 3 instructions
-
-
-
-//beginning of list
-      if(i == 0)
-      {
-        this.prev = null;
-        pastNode = this; //new node becomes past node (no other nodes to point toward or back to yet)
-      }
-      if(i == list.size()-1)
-      {
-        this.next = null;
-        this.next.prev = pastNode;
-      }
-      
-      //middle of list
-      else  
-      {
-        this.next = pastNode; //new node point back to prev node
-        pastNode.next.prev = pastNode;
-        pastNode = this; //new node becomes past node
-      }
