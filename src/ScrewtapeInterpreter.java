@@ -180,19 +180,27 @@ public class ScrewtapeInterpreter {
 
     
     StringBuilder outputTape = new StringBuilder();
-    for(int j = 0; j < program.length(); j++)
-    {
-        char tapeScrew = program.charAt(j); 
+    Map<Integer, Integer> map = bracketMap(program);
+    int counter = 0;
 
+    while(counter < program.length())
+    {
+        char tapeScrew = program.charAt(counter); 
+
+
+        //Add
         if(tapeScrew == '+')
         {
           tapePointer.value++;
         }
+
+        //Subtract
         else if(tapeScrew == '-')
         {
           tapePointer.value--;
         }
 
+        //Move Memory Node Right
         else if(tapeScrew == '>')
         {
           if(tapePointer.next == null)
@@ -203,6 +211,7 @@ public class ScrewtapeInterpreter {
           tapePointer = tapePointer.next;
         }
 
+        //Move Memory Node Left
         else if(tapeScrew == '<')
         {
           if(tapePointer.prev == null)
@@ -214,12 +223,31 @@ public class ScrewtapeInterpreter {
           }
           tapePointer = tapePointer.prev;
         }
+
+        //Print output
         else if(tapeScrew == '.')
         {
           outputTape.append((char) tapePointer.value);
         }
+
+        else if(tapeScrew == '[')
+        { 
+          if(tapePointer.value == 0)
+          {
+            counter = map.get(counter);
+          }
+        }
+
+        else if(tapeScrew == ']')
+        {
+          if(tapePointer.value != 0)
+          {
+            counter = map.get(counter) - 1;
+          }
+        }
+
         
-      
+        counter++;
       }
       return outputTape.toString();
 
