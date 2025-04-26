@@ -179,7 +179,7 @@ public class ScrewtapeInterpreter {
       if(currentSymbol == '-')
         tapePointer.value--;
 
-      //< prev, > next functionality
+      //< (prev), > (next) functionality
       if(currentSymbol == '<')
       {
         Node newPrevNode = new Node(0);
@@ -198,6 +198,16 @@ public class ScrewtapeInterpreter {
         currentNode = newNextNode;
       }
 
+      //outputting functionality
+      //catsing int to char char c = (char)#;
+      // . = System.out.print()/println()
+
+      if(currentSymbol == '.')
+      {
+        int charValue = tapePointer.value;
+        char casted = (char)charValue;
+        result = result + casted;
+      }
       
     }
 
