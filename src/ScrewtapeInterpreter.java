@@ -124,11 +124,15 @@ public class ScrewtapeInterpreter {
       {
         openBracketsIndex.push(i);
       }
-      
+
       if(program.charAt(i) == ']') //closing
       {
         brackets.put(i, openBracketsIndex.pop());
       }
+    }
+    if(!openBracketsIndex.isEmpty())
+    {
+      throw new IllegalArgumentException("Contains unmatched brackets");
     }
     return brackets;
   }
