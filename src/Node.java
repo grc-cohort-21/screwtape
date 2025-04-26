@@ -39,6 +39,34 @@ public class Node {
    */
   public Node(List<Integer> list) {
     // TODO: implement this
+    if (list.isEmpty())
+    {
+      throw new IllegalArgumentException("lol");
+    }
+
+    Node head = new Node(list.get(0));
+    head.prev = null;
+    head.next = null;
+    Node current = head;
+    int index = 1; // because 0 already used by head
+
+    while (current != null)
+    {
+        Node newNode = new Node(list.get(index)); // get 7
+        if (head.next == null) // will only happen once; at start of traverse
+        {
+          newNode.prev = head; // 5 <- 7
+          newNode.next = null; // 5 <- 7 -> null
+          head.next = newNode; // 5 <-> 7 -> null
+          current = head.next; // current: 7
+        } else 
+        { // newNode: 3
+          newNode.prev = current; // 7 <- 3
+          newNode.next = null;    // 7 <- 3 -> null;
+          current.next = newNode; // 7 <-> 3 -> null
+        }
+        index++;
+    }
   }
 
   /**
