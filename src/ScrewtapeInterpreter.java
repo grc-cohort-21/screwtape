@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -167,7 +168,9 @@ public class ScrewtapeInterpreter {
     
     Node currentNode = new Node(0);
     tapeHead = currentNode;
-    tapePointer = currentNode;    
+    tapePointer = currentNode;
+    Map<Integer, Integer> bMap = new HashMap<>();
+    bMap = bracketMap(program);
 
     for(int i = 0; i < program.length(); i++)
     {
@@ -199,19 +202,70 @@ public class ScrewtapeInterpreter {
       }
 
       //outputting functionality
-      //catsing int to char char c = (char)#;
-      // . = System.out.print()/println()
-
       if(currentSymbol == '.')
       {
         int charValue = tapePointer.value;
         char casted = (char)charValue;
-        result = result + casted;
+        result += casted;
       }
-      
-    }
 
+      //loop functionality
+      if(bMap.values().contains(i))
+      {
+        int closingIndex = 0;
+        for(int closing : bMap.keySet())
+        {
+          if(i == bMap.get(closing))
+          {
+            closingIndex = closing;
+          }
+        }
+
+        String loop = program.substring(i+1, closingIndex);        
+        //loop
+        int loopIndex = 0;
+    
+        while(tapePointer.value != 0)
+        {
+            //+ , - functionality
+          if(loop.charAt(loopIndex) == '+')
+            tapePointer.value++;
+          if(loop.charAt(loopIndex) == '-')
+            tapePointer.value--;
+    
+          //< (prev), > (next) functionality
+          if(loop.charAt(loopIndex) == '<')
+          {
+            Node newPrevNode = new Node(0);
+            currentNode.prev = newPrevNode;
+            newPrevNode.next = currentNode;
+            tapePointer = newPrevNode;
+            tapeHead = newPrevNode;
+            currentNode = newPrevNode;   
+          }
+          if(loop.charAt(loopIndex) == '>')
+          {
+            Node newNextNode = new Node(0);
+            currentNode.next = newNextNode;
+            newNextNode.prev = currentNode;
+            tapePointer = newNextNode;
+            currentNode = newNextNode;
+          }
+          if(loop.charAt(loopIndex) == '.')
+          {
+            int charValue = tapePointer.value;
+            char casted = (char)charValue;
+            result += casted;
+          }
+        }
+      }      
+    }
     // If you get stuck, you can look at hint.md for a hint
     return result;
+  }
+
+  public String loops(String loop, Node currentNode) 
+  {
+    return "result";
   }
 }

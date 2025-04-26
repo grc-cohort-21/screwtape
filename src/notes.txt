@@ -5,3 +5,6 @@ wvae 3:
     to translate the code into java
 
     using a map? to track the closing brackets see wave 3 instructions
+
+
+"+++[>++<-]>" wave 4  loop test
