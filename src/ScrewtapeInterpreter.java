@@ -157,7 +157,48 @@ public class ScrewtapeInterpreter {
    */
   public String execute(String program) {
     // TODO: Implement this
+
+    //create +, - functionality 
+    //< = move to prev(left), > = move to next (right)
+    //. = print value (cast int to char)
+    //loop functionality will be while or do while loop with conditions (until node value = 0)
+    
+    String result = "";
+    
+    Node currentNode = new Node(0);
+    tapeHead = currentNode;
+    tapePointer = currentNode;    
+
+    for(int i = 0; i < program.length(); i++)
+    {
+      char currentSymbol = program.charAt(i);
+
+      //+ , - functionality
+      if(currentSymbol == '+')
+        tapePointer.value++;
+      if(currentSymbol == '-')
+        tapePointer.value--;
+
+      //< prev, > next functionality
+      if(currentSymbol == '<')
+      {
+        Node newPrevNode = new Node(0);
+        tapeHead = newPrevNode;
+        tapePointer = newPrevNode;
+        currentNode = newPrevNode;
+      }
+
+      if(currentSymbol == '>')
+      {
+        Node newNextNode = new Node(0);
+        tapePointer = newNextNode;
+        currentNode = newNextNode;
+      }
+
+      
+    }
+
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    return result;
   }
 }
