@@ -24,6 +24,40 @@ class ScrewtapeInterpreterTest {
   }
 
   // TODO: Implement more tests for bracketMap
+
+  @Test
+  void testNormalBracketMap() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[+++][---]<<[]";
+
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(0, 4);
+    expectedMap.put(5, 9);
+    expectedMap.put(12, 13);
+
+
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  void testBackAndForthBracketMap() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[+++][---]<<[+]";
+
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(0, 4);
+    expectedMap.put(5, 9);
+    expectedMap.put(12, 14);
+
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+    assertEquals(expectedMap, actualMap);
+  }
+
   // At a bare minimum, implement the other examples from the Javadoc and at least one more you come up with
 
   
