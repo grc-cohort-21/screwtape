@@ -183,14 +183,17 @@ public class ScrewtapeInterpreter {
       if(currentSymbol == '<')
       {
         Node newPrevNode = new Node(0);
-        tapeHead = newPrevNode;
+        currentNode.prev = newPrevNode;
+        newPrevNode.next = currentNode;
         tapePointer = newPrevNode;
+        tapeHead = newPrevNode;
         currentNode = newPrevNode;
       }
-
       if(currentSymbol == '>')
       {
         Node newNextNode = new Node(0);
+        currentNode.next = newNextNode;
+        newNextNode.prev = currentNode;
         tapePointer = newNextNode;
         currentNode = newNextNode;
       }
