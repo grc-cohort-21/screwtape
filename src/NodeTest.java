@@ -103,4 +103,15 @@ class NodeTest {
   }
 
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  @Test
+  void testToListWithNull() {
+    // Arrange
+    List<Integer> values = List.of(-99);
+    
+    // Act
+    Node head = new Node(values);
+    
+    // Assert
+    assertEquals(-99, head.value);
+  }
 }
