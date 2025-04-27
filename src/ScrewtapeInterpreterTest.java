@@ -55,6 +55,15 @@ class ScrewtapeInterpreterTest {
   }
 
   @Test
+  void testUnevenPairBracketMap() {
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+
+    String program = "[+++[---]<<[+]";
+
+    assertThrows(IllegalArgumentException.class, () -> interpreter.bracketMap(program));
+  }
+
+  @Test
   void testAdd() {
     // Arrange
     ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
