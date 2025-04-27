@@ -25,7 +25,35 @@ class ScrewtapeInterpreterTest {
 
   // TODO: Implement more tests for bracketMap
   // At a bare minimum, implement the other examples from the Javadoc and at least one more you come up with
+  @Test
+  void testThrowsErrorIfProgramContainsUnmatchedBrackets() {
+    // Arrange
 
+    // Act
+
+    // Assert
+    
+  }
+
+  @Test
+  void testSkipsOverAnyOtherCharsThatArentBrackets() {
+    // Arrange
+    
+    // Act
+
+    // Assert
+
+  }
+
+  @Test
+  void testThrowsErrorIfStringOnlyHasSeveralOpenBrackets() {
+    // Arrange
+
+    // Act
+
+    // Assert
+    
+  }
   
 
   @Test
