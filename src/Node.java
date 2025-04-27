@@ -88,6 +88,5 @@ public class Node {
     }
 
     return list;
-    //return null;
   }
 }
