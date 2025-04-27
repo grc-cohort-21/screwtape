@@ -117,22 +117,33 @@ public class ScrewtapeInterpreter {
     char openingBracket = '[';
     char closingBracket = ']';
     int index = 0;
-    char myArray[] = program.toCharArray();
 
-    if (!stack.empty())
+    if (program == "")
     {
-      throw new IllegalArgumentException("Map contains unmatched brackets.");
+      throw new IllegalArgumentException("String is empty.");
     }
+    
+    char myArray[] = program.toCharArray();
 
     for (char letter : myArray) // example input: `[+++][---]<<[+]`
     {
       if (letter == openingBracket)
       {
         stack.push(index);
-      } else if (letter == closingBracket) { 
+      } else if (letter == closingBracket) // ex input: `[>]]`
+      {
+        if (stack.empty())
+        {
+          throw new IllegalArgumentException("Map contains unmatched brackets.");
+        }
         returnMap.put(index, stack.pop());
       }
       index++;  // if letter is anything else, just add to index
+    }
+
+    if (!stack.empty())
+    {
+      throw new IllegalArgumentException("Map contains unmatched brackets.");
     }
 
     return returnMap;
