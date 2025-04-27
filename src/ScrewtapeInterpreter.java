@@ -207,6 +207,11 @@ public class ScrewtapeInterpreter {
           tapeHead = newNode;
         }
         current = tapePointer;
+      } else if (letter == '.')
+      {
+        int asciiValue = tapePointer.value;
+        char c = (char) asciiValue;
+        outputString += c;
       }
     }
 
