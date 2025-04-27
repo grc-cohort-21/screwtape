@@ -171,25 +171,22 @@ public class ScrewtapeInterpreter {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
     String outputString = "";
-
-    //char charArray[] = program.toCharArray();
-
     Node current = tapePointer;
 
     //Stack<Character> stack = new Stack<>();
     Stack<Integer> stack = new Stack<>();
 
-    int instructionPointer = 0;
+    int index = 0; // instructionPointer
     
-    while (instructionPointer < program.length())
+    while (index < program.length())
     {
-      if (program.charAt(instructionPointer) == '+')
+      if (program.charAt(index) == '+')
       {
         current.value++;
-      } else if (program.charAt(instructionPointer) == '-')
+      } else if (program.charAt(index) == '-')
       {
         current.value--;
-      } else if (program.charAt(instructionPointer) == '>')
+      } else if (program.charAt(index) == '>')
       {
         if (tapePointer.next == null)
         {
@@ -199,7 +196,7 @@ public class ScrewtapeInterpreter {
 
         tapePointer = tapePointer.next;
         current = tapePointer;
-      } else if (program.charAt(instructionPointer) == '<')
+      } else if (program.charAt(index) == '<')
       {
         if (tapePointer.prev != null) // example: "<<++"  expected: [2, 0, 0] / actual: [0]
         {
@@ -212,13 +209,29 @@ public class ScrewtapeInterpreter {
           tapeHead = newNode;
         }
         current = tapePointer;
-      } else if (program.charAt(instructionPointer) == '.')
+      } else if (program.charAt(index) == '.')
       {
         int asciiValue = tapePointer.value;
         char c = (char) asciiValue;
-        outputString += c;
+        outputString += c;                                  
+      } 
+      
+      // example: +++++++[>+++[>+++++<-]<-]>>.
+      else if (program.charAt(index) == '[') // stack: 8,13
+      {
+        stack.push(index);
+      } 
+      
+      else if (program.charAt(index) == ']') // instructionpointer: 22
+      {
+        if (tapePointer.value != 0)
+        {
+          tapePointer.value--;
+          index = stack.pop();
+        }
       }
-      instructionPointer++;
+
+      index++;
     }
 
     /*
