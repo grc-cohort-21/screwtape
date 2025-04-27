@@ -122,7 +122,7 @@ public class ScrewtapeInterpreter {
     {
       throw new IllegalArgumentException("String is empty.");
     }
-    
+
     char myArray[] = program.toCharArray();
 
     for (char letter : myArray) // example input: `[+++][---]<<[+]`
@@ -170,6 +170,30 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    String outputString = "";
+
+    char charArray[] = program.toCharArray();
+
+    Node current = tapePointer;
+
+    for (char letter : charArray)
+    {
+      if (letter == '+')
+      {
+        current.value++;
+      } else if (letter == '-')
+      {
+        current.value--;
+      } else if (letter == '>')
+      {
+        if (tapePointer.next != null)
+        {
+          tapePointer = tapePointer.next;
+          current = tapePointer;
+        }
+      }
+    }
+
+    return outputString;
   }
 }
