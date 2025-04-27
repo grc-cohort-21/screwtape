@@ -43,8 +43,31 @@ class NodeTest {
 
   
   // TODO: Add test for list constructor when passed null list
+  @Test
+  void testListConstructorWithNullList(){
+    //Act and Assert
+    assertThrows(
+      IllegalAccessException.class,
+      () -> new Node((List<Integer>) null),
+      "Expected constructor to throw IllegalArgumentException for null list"
+    );
+  }
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  @Test
+  void testListConstructorWithSingleValue(){
+    //Arrange
+    List<Integer> values = List.of(42);
+    //Act
+    Node head = new Node(values);
+    //Assert
+    assertEquals(42, head.value);
+      //check prev link of head is null
+    assertNull(head.prev);
+      //check next link of head is null
+    assertNull(head.next);
 
+
+  }
 
   // -------- WAVE 2 -------
 
