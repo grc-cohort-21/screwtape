@@ -184,13 +184,29 @@ public class ScrewtapeInterpreter {
       } else if (letter == '-')
       {
         current.value--;
-      } else if (letter == '>')
+      } else if (letter == '>') // example: ">>+"     expected: [0, 0, 1] / actual: [1]
       {
-        if (tapePointer.next != null)
+        if (tapePointer.next == null)
         {
-          tapePointer = tapePointer.next;
-          current = tapePointer;
+          Node newNode = new Node(0);
+          tapePointer.next = newNode;
         }
+
+        tapePointer = tapePointer.next;
+        current = tapePointer;
+      } else if (letter == '<')
+      {
+        if (tapePointer.prev != null) // example: "<<++"  expected: [2, 0, 0] / actual: [0]
+        {
+          tapePointer = tapePointer.prev;
+        } else
+        {
+          Node newNode = new Node(0);
+          newNode.next = current;
+          tapePointer = newNode;
+          tapeHead = newNode;
+        }
+        current = tapePointer;
       }
     }
 
