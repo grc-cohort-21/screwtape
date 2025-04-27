@@ -172,19 +172,24 @@ public class ScrewtapeInterpreter {
     // If you get stuck, you can look at hint.md for a hint
     String outputString = "";
 
-    char charArray[] = program.toCharArray();
+    //char charArray[] = program.toCharArray();
 
     Node current = tapePointer;
 
-    for (char letter : charArray)
+    //Stack<Character> stack = new Stack<>();
+    Stack<Integer> stack = new Stack<>();
+
+    int instructionPointer = 0;
+    
+    while (instructionPointer < program.length())
     {
-      if (letter == '+')
+      if (program.charAt(instructionPointer) == '+')
       {
         current.value++;
-      } else if (letter == '-')
+      } else if (program.charAt(instructionPointer) == '-')
       {
         current.value--;
-      } else if (letter == '>') // example: ">>+"     expected: [0, 0, 1] / actual: [1]
+      } else if (program.charAt(instructionPointer) == '>')
       {
         if (tapePointer.next == null)
         {
@@ -194,7 +199,7 @@ public class ScrewtapeInterpreter {
 
         tapePointer = tapePointer.next;
         current = tapePointer;
-      } else if (letter == '<')
+      } else if (program.charAt(instructionPointer) == '<')
       {
         if (tapePointer.prev != null) // example: "<<++"  expected: [2, 0, 0] / actual: [0]
         {
@@ -207,13 +212,29 @@ public class ScrewtapeInterpreter {
           tapeHead = newNode;
         }
         current = tapePointer;
-      } else if (letter == '.')
+      } else if (program.charAt(instructionPointer) == '.')
       {
         int asciiValue = tapePointer.value;
         char c = (char) asciiValue;
         outputString += c;
       }
+      instructionPointer++;
     }
+
+    /*
+      } if (letter == '[') // example: +++++++[>+++[>+++++<-]<-]>>.
+      {
+        stack.push(instructionPointer); // push to stack and do nothing | stack: 8,13
+        temp = instructionPointer;
+      } else if (letter == ']') // instructionpointer is 22
+      {
+        if (tapePointer.value != 0)
+        {
+          instructionPointer = temp;
+        }
+      }
+      instructionPointer++;
+    }*/
 
     return outputString;
   }
