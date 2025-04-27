@@ -59,10 +59,12 @@ class NodeTest {
   @Test
   void testListConstrutorWithOnlyOneElement() {
     // Arrange
-
+    List<Integer> values = List.of(99);
     // Act
+    Node head = new Node(values);
 
     // Assert
+    assertEquals(99, head.value);
   }
 
 
