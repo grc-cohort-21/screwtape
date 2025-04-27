@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -165,6 +166,58 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+
+    Map<Integer, Integer> loopMap = bracketMap(program);
+    int pointer = 0;
+    String output = "";
+
+    while (pointer < program.length()) {
+
+      if (loopMap.containsKey(pointer)) {
+        if (getTapePointerValue() != 0) {
+          pointer = loopMap.get(pointer);
+        }
+      }
+
+      if (program.charAt(pointer) == '+') {
+        tapePointer.value = getTapePointerValue() + 1;
+      }
+
+      if (program.charAt(pointer) == '-') {
+        tapePointer.value = getTapePointerValue() - 1;
+      }
+
+      if (program.charAt(pointer) == '>') {
+        if (tapePointer.next == null) {
+          List<Integer> temp = getTapeData();
+          temp.add(0);
+          tapeHead = new Node(temp);
+          moveTapePointerToHead();
+          moveTapePointerToTail();
+        } else {
+          tapePointer = tapePointer.next;
+        }
+      }
+
+      if (program.charAt(pointer) == '<') {
+        if (tapePointer.prev == null) {
+          List<Integer> temp = new ArrayList<>();
+          temp.add(0);
+          temp.addAll(getTapeData());
+          tapeHead = new Node(temp);
+          moveTapePointerToHead();
+        } else {
+          tapePointer = tapePointer.prev;
+        }
+      }
+
+      if (program.charAt(pointer) == '.') {
+        output += (char) getTapePointerValue();
+      }
+
+      pointer++;
+    }
+
+    return output;
   }
 }
