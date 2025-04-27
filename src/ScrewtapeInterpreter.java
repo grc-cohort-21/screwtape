@@ -108,23 +108,31 @@ public class ScrewtapeInterpreter {
    */
   public Map<Integer, Integer> bracketMap(String program) {
     // TODO: Implement this
-    int i = 0;
-    List<Character> openChar = List.of('[','(','{');
+    
+    Stack<Integer> intStack = new Stack<>();
     Stack<Character> charStack = new Stack<>();
+    Map<Character,Character> closeOpen = new HashMap<>();
+    closeOpen.put(')', '(');
+    closeOpen.put('}', '{');
+    closeOpen.put(']', '[');
+
     Map<Integer,Integer> bracketMap = new HashMap<>();
+
+    int i = 0;
     for (char c : program.toCharArray()) {
-      if(openChar.contains(c)) {
-        bracketMap.put(i,null);
+      if(closeOpen.containsValue(c)) {
+        intStack.push(i);
         charStack.push(c);
-      } else {
-        if (charStack.pop()==c){
-          bracketMap.
+      }
+      else if (closeOpen.containsKey(c)) {
+        if (charStack.peek()==closeOpen.get(c)) {
+          bracketMap.put(i, intStack.pop());
         }
       }
       i++;
     }
     // Hint: use a stack
-    return null;
+    return bracketMap;
   }
 
   /**
