@@ -112,31 +112,27 @@ public class ScrewtapeInterpreter {
     // Hint: use a stack
 
     Map<Integer, Integer> returnMap = new HashMap<>();
-    Stack<Character> stack = new Stack<>();
+    Stack<Integer> stack = new Stack<>();
 
     char openingBracket = '[';
     char closingBracket = ']';
     int index = 0;
+    char myArray[] = program.toCharArray();
 
-    // check for unmatched first before doing anything else
-    // if (unmatched brackets) { throw new IllegalArgumentException("Map contains unmatched brackets.")};
     if (!stack.empty())
     {
       throw new IllegalArgumentException("Map contains unmatched brackets.");
     }
 
-    for (char bracket : program.toCharArray())
+    for (char letter : myArray) // example input: `[+++][---]<<[+]`
     {
-      if (bracket == openingBracket)
+      if (letter == openingBracket)
       {
-        stack.push(bracket);
-        returnMap.put(index, null);
-        index++;
-      } else {
-        stack.pop();
-        returnMap.put(index, returnMap.get(index));
-        index++;
+        stack.push(index);
+      } else if (letter == closingBracket) { 
+        returnMap.put(index, stack.pop());
       }
+      index++;  // if letter is anything else, just add to index
     }
 
     return returnMap;
