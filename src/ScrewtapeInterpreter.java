@@ -106,7 +106,7 @@ public class ScrewtapeInterpreter {
    * @return A map where each key-value pair represents a matching bracket pair.
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
-  public Map<Integer, Integer> bracketMap(String program) {
+  public Map<Integer, Integer> bracketMap(String program) throws IllegalArgumentException{
     Map<Integer, Integer> returnable = new HashMap<>();
     Stack<Integer> myStack = new Stack<>();
     int counter = 0;
@@ -119,12 +119,12 @@ public class ScrewtapeInterpreter {
         returnable.put(counter, temp);
       }
       else if (c == ']' && myStack.isEmpty()){
-        throw new IllegalArgumentException("Program Contains mismatched brackets 1");
+        throw new IllegalArgumentException("Program contains excessive closing brackets");
       }
       counter++;
     }
     if(!myStack.isEmpty()){
-      throw new IllegalArgumentException("Program Contains mismatched brackets 2");
+      throw new IllegalArgumentException("Program contains excessive openning brackets");
     }
     return returnable;
   }
