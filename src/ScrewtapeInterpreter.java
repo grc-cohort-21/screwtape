@@ -118,7 +118,6 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public Map<Integer, Integer> bracketMap(String program) {
-    // TODO: Implement this
 
     Stack<Integer> intStack = new Stack<>();
     Stack<Character> charStack = new Stack<>();
@@ -169,17 +168,8 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public String execute(String program) {
-    // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
-
     Stack<Integer> intStack = new Stack<>();
-    Stack<Character> charStack = new Stack<>();
-    Map<Character, Character> closeOpen = new HashMap<>();
-    closeOpen.put(')', '(');
-    closeOpen.put('}', '{');
-    closeOpen.put(']', '[');
-
-    tapePointer = tapeHead;
     int pointer = 0;
     String output = "";
     while (pointer < program.length()) {
@@ -196,10 +186,12 @@ public class ScrewtapeInterpreter {
       }
       // BACKWARD
       if (program.charAt(pointer) == '<') {
-        if (tapePointer.next == null) {
+        if (tapePointer.prev == null) {
           Node newNode = new Node(0);
-          tapePointer.next = newNode;
-          newNode.prev = tapePointer;
+          tapePointer.prev = newNode;
+          newNode.next = tapePointer;
+          tapePointer = newNode;
+          tapeHead = newNode;
         } else {
           tapePointer = tapePointer.prev;
         }
@@ -215,6 +207,19 @@ public class ScrewtapeInterpreter {
       //PRINT
       if (program.charAt(pointer) == '.') {
         output+= (char) tapePointer.value;
+      }
+      //OPEN BRACKET, LOOP ANCHOR
+      if (program.charAt(pointer) == '[') {
+        intStack.push(pointer);
+      }
+      //CLOSE BRACKET, CHECK TO START/PASS LOOP
+      if (program.charAt(pointer) == ']') {
+        if (tapePointer.value!=0){
+          pointer = intStack.peek();
+        }
+        else {
+          intStack.pop();
+        }
       }
       pointer++;
     }
