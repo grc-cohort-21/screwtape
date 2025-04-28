@@ -165,7 +165,6 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public String execute(String program) {
-    Node current = tapeHead;
     int pointer = 0;
     int bracketVal = 0;
     String output = "";
@@ -211,6 +210,11 @@ public class ScrewtapeInterpreter {
         {
           pointer = bracketVal;
         }
+      }
+      if(program.charAt(pointer) == '.')
+      {
+        char ch = (char) tapeHead.value;
+        output += ch;    
       }
 
       pointer++;
