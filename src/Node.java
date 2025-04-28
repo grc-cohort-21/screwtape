@@ -37,8 +37,21 @@ public class Node {
    * @param list The list of integers to initialize the doubly linked list.
    * @throws IllegalArgumentException If the list is null or empty.
    */
-  public Node(List<Integer> list) {
-    // TODO: implement this
+  public Node(List<Integer> list) 
+  {
+    // Initialize the head node
+    Node head = new Node(list.get(0));
+    Node curr = head; // Set a marker to hold the current spot
+    Node pre = head; // Set a marker to point to the previous node
+    
+    for (int i = 1; i < list.size(); i++)  // For each item in the list
+    {
+      curr.next = new Node(list.get(i)); // Set the next node in line
+      curr = curr.next; // set the current node to the next one in line
+      curr.prev = pre; // set the prev
+      pre = pre.next; // iterate the pre marker
+    }
+    
   }
 
   /**
