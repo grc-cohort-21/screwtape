@@ -169,8 +169,7 @@ public class ScrewtapeInterpreter {
     Node currentNode = new Node(0);
     tapeHead = currentNode;
     tapePointer = currentNode;
-    Map<Integer, Integer> bMap = new HashMap<>();
-    bMap = bracketMap(program);
+    Map<Integer, Integer> bMap = bracketMap(program);
 
     for(int i = 0; i < program.length(); i++)
     {
@@ -179,30 +178,45 @@ public class ScrewtapeInterpreter {
       //+ , - functionality
       if(currentSymbol == '+')
         tapePointer.value++;
-      if(currentSymbol == '-')
+      else if(currentSymbol == '-')
         tapePointer.value--;
 
       //< (prev), > (next) functionality
-      if(currentSymbol == '<')
+      else if(currentSymbol == '<')
       {
-        Node newPrevNode = new Node(0);
-        currentNode.prev = newPrevNode;
-        newPrevNode.next = currentNode;
-        tapePointer = newPrevNode;
-        tapeHead = newPrevNode;
-        currentNode = newPrevNode;
+        if(tapePointer.prev == null)
+        {
+          Node newPrevNode = new Node(0);
+          currentNode.prev = newPrevNode;
+          newPrevNode.next = currentNode;
+          tapePointer = newPrevNode;
+          tapeHead = newPrevNode;
+          currentNode = newPrevNode;
+        }
+        else
+        {
+          tapePointer = tapePointer.prev;
+        }
+        
       }
-      if(currentSymbol == '>')
+      else if(currentSymbol == '>')
       {
-        Node newNextNode = new Node(0);
-        currentNode.next = newNextNode;
-        newNextNode.prev = currentNode;
-        tapePointer = newNextNode;
-        currentNode = newNextNode;
+        if(tapePointer.next == null)
+        {
+          Node newNextNode = new Node(0);
+          currentNode.next = newNextNode;
+          newNextNode.prev = currentNode;
+          tapePointer = newNextNode;
+          currentNode = newNextNode;
+        }
+        else
+        {
+          tapePointer = tapePointer.next;
+        }        
       }
 
       //outputting functionality
-      if(currentSymbol == '.')
+      else if(currentSymbol == '.')
       {
         int charValue = tapePointer.value;
         char casted = (char)charValue;
@@ -210,62 +224,50 @@ public class ScrewtapeInterpreter {
       }
 
       //loop functionality
-      if(bMap.values().contains(i))
+      if(currentSymbol == '[')
       {
-        int closingIndex = 0;
-        for(int closing : bMap.keySet())
+        continue;
+      }
+      else if(currentSymbol == ']')
+      {
+        if(tapePointer.value != 0)
         {
-          if(i == bMap.get(closing))
-          {
-            closingIndex = closing;
-          }
+          i = bMap.get(i);
+          // System.out.println(tapePointer.value);
+          // System.out.println(i);
+          // System.out.println(result);
         }
+        else
+          continue;
+      }
 
-        String loop = program.substring(i+1, closingIndex);        
-        //loop
-        int loopIndex = 0;
-    
-        while(tapePointer.value != 0)
-        {
-            //+ , - functionality
-          if(loop.charAt(loopIndex) == '+')
-            tapePointer.value++;
-          if(loop.charAt(loopIndex) == '-')
-            tapePointer.value--;
-    
-          //< (prev), > (next) functionality
-          if(loop.charAt(loopIndex) == '<')
-          {
-            Node newPrevNode = new Node(0);
-            currentNode.prev = newPrevNode;
-            newPrevNode.next = currentNode;
-            tapePointer = newPrevNode;
-            tapeHead = newPrevNode;
-            currentNode = newPrevNode;   
-          }
-          if(loop.charAt(loopIndex) == '>')
-          {
-            Node newNextNode = new Node(0);
-            currentNode.next = newNextNode;
-            newNextNode.prev = currentNode;
-            tapePointer = newNextNode;
-            currentNode = newNextNode;
-          }
-          if(loop.charAt(loopIndex) == '.')
-          {
-            int charValue = tapePointer.value;
-            char casted = (char)charValue;
-            result += casted;
-          }
-        }
-      }      
+
+
+
+
+
+
+
+
+
+
+
+      // if(bMap.values().contains(i))
+      // {
+      //   int closingIndex = 0;
+      //   for(int closing : bMap.keySet())
+      //   {
+      //     if(i == bMap.get(closing))
+      //     {
+      //       closingIndex = closing;
+      //     }
+      //   }
+
+      //   String loop = program.substring(i+1, closingIndex);        
+      //   //loop
+      //   int loopIndex = 0;
     }
+    return result;      
+  }
     // If you get stuck, you can look at hint.md for a hint
-    return result;
-  }
-
-  public String loops(String loop, Node currentNode) 
-  {
-    return "result";
-  }
 }
