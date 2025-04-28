@@ -1,5 +1,7 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * A Screwtape interpreter that executes programs written in the Screwtape esoteric programming language.
@@ -16,7 +18,8 @@ import java.util.Map;
  * 
  * This interpreter provides methods to manipulate the memory tape, execute programs, and handle loops efficiently.
  */
-public class ScrewtapeInterpreter {
+public class ScrewtapeInterpreter 
+{
 
   /** The head of the doubly linked list representing the tape. */
   private Node tapeHead;
@@ -27,7 +30,8 @@ public class ScrewtapeInterpreter {
   /**
    * Constructs a new Screwtape interpreter with an initialized memory tape of a single node set to 0.
    */
-  public ScrewtapeInterpreter() {
+  public ScrewtapeInterpreter() 
+  {
     tapeHead = new Node(0);
     tapePointer = tapeHead;
   }
@@ -37,7 +41,8 @@ public class ScrewtapeInterpreter {
    * 
    * @return A list of integers representing the values in the memory tape, starting from the head.
    */
-  public List<Integer> getTapeData() {
+  public List<Integer> getTapeData() 
+  {
     return tapeHead.toList();
   }
 
@@ -47,7 +52,8 @@ public class ScrewtapeInterpreter {
    * @param data A list of integers to initialize the memory tape. Each integer will correspond to a memory node.
    * @throws IllegalArgumentException If the list is null or empty.
    */
-  public void setTape(List<Integer> data) {
+  public void setTape(List<Integer> data) 
+  {
     tapeHead = new Node(data);
     tapePointer = tapeHead;
   }
@@ -57,22 +63,26 @@ public class ScrewtapeInterpreter {
    * 
    * @return The integer value of the current memory node.
    */
-  public int getTapePointerValue() {
+  public int getTapePointerValue() 
+  {
     return tapePointer.value;
   }
 
   /**
    * Moves the tape pointer to the head of the memory tape.
    */
-  public void moveTapePointerToHead() {
+  public void moveTapePointerToHead() 
+  {
     tapePointer = tapeHead;
   }
 
   /**
    * Moves the tape pointer to the tail of the memory tape.
    */
-  public void moveTapePointerToTail() {
-    while (tapePointer.next != null) {
+  public void moveTapePointerToTail() 
+  {
+    while (tapePointer.next != null) 
+    {
       tapePointer = tapePointer.next;
     }
   }
@@ -104,11 +114,33 @@ public class ScrewtapeInterpreter {
    * @return A map where each key-value pair represents a matching bracket pair.
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
-  public Map<Integer, Integer> bracketMap(String program) {
+  public Map<Integer, Integer> bracketMap(String program) //class of the datatype, datatypes passed in the datastructure
+  {
     // TODO: Implement this
+    
+    //key is where the loop will end, value is where the loop begins
+    Map<Integer, Integer> mapper = new HashMap<>();
+    Stack<Integer> stacker = new Stack<>(); 
+
+    for(int i = 0; i < program.length(); i++)
+    {
+      if (program.charAt(i) == '[')
+      {
+        stacker.push(i);
+      }
+      if (program.charAt(i) == ']')
+      {
+        mapper.put(i, stacker.pop()); //nothing passed in pop method. FILO nothing needs to be in there
+      }
+    }
+      if (!stacker.isEmpty()) //if stacker is not empty means theres not a match, [....no end.
+        {
+        throw new IllegalArgumentException();
+        }
+  
     // Hint: use a stack
-    return null;
-  }
+    return mapper;
+  };
 
   /**
    * Executes a Screwtape program and returns the output as a string.
