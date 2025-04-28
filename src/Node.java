@@ -51,7 +51,9 @@ public class Node {
     for(int i = 1; i < list.size(); i++){
       Node nextNode = new Node();
       nextNode.value = list.get(i);
-
+      current.next = nextNode;
+      nextNode.prev = current;
+      current = nextNode;
     }
   }
 
