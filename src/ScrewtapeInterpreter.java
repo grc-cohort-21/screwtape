@@ -146,6 +146,9 @@ public class ScrewtapeInterpreter {
       // Ups count for new index
       count++;
     }
+    if(!stack.empty()) {
+      throw new IllegalArgumentException("Missing closing brackets");
+    }
 
     // Reverses the keys and values to return what is required
     Map<Integer, Integer> reversePlacements = new HashMap<>();

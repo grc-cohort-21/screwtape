@@ -25,7 +25,63 @@ class ScrewtapeInterpreterTest {
 
   // TODO: Implement more tests for bracketMap
   // At a bare minimum, implement the other examples from the Javadoc and at least one more you come up with
+  @Test
+  void testNestedBracketMapSinglePair() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[]";
 
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(1, 0);
+
+    // Act
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+    // Assert
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  void testNestedBracketMapAllSeparate() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[+++][---]<<[+]";
+
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(4, 0);
+    expectedMap.put(9, 5);
+    expectedMap.put(14, 12);
+
+    // Act
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+    // Assert
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  void testNestedBracketMapMissingClosingBracket() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "++[>++<-]++[[]";
+
+    // Act
+    assertThrows(IllegalArgumentException.class,
+      () -> interpreter.bracketMap(program));
+    
+  }
+
+  @Test
+  void testNestedBracketMapMissingOpeningBracket() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "++[>++<-]++[]]";
+
+    // Act
+    assertThrows(IllegalArgumentException.class,
+      () -> interpreter.bracketMap(program));
+    
+  }
   
 
   @Test
