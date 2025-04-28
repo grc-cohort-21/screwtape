@@ -25,8 +25,54 @@ class ScrewtapeInterpreterTest {
 
   // TODO: Implement more tests for bracketMap
   // At a bare minimum, implement the other examples from the Javadoc and at least one more you come up with
+@Test
+void testSingle()
+{
+  //Arrange
+  ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+  String program = ">[+-]";
 
+  //Act
+  Map<Integer, Integer> expectedMap = new HashMap<>();
+  expectedMap.put(4, 1);
+
+  //Assert
+  Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+  assertEquals(expectedMap, actualMap);
   
+}
+  
+@Test
+void testThreePairs()
+{
+  //Arrange
+  ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+  String program = ">[+-]>[+-]>[+-]";
+
+  //Act
+  Map<Integer, Integer> expectedMap = new HashMap<>();
+  expectedMap.put(4, 1);
+  expectedMap.put(9, 6);
+  expectedMap.put(14, 11);
+
+  //Assert
+  Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+  assertEquals(expectedMap, actualMap);
+}
+
+@Test
+void testUnmatched()
+{
+  //Arrange
+  ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+  String program = ">[+-]>[+-]>[+-";
+
+  //Act
+
+  //Assert
+  assertThrows(IllegalArgumentException.class, () -> interpreter.bracketMap(program));
+}
+
 
   @Test
   void testAdd() {
