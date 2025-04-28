@@ -109,13 +109,24 @@ public class ScrewtapeInterpreter {
   public Map<Integer, Integer> bracketMap(String program) {
     Map<Integer, Integer> returnable = new HashMap<>();
     Stack<Integer> myStack = new Stack<>();
-    // probably need a counter
+    int counter = 0;
     for(char c : program.toCharArray()){
-      // Shove each openner counter into the stack   <- this gets position of openner
-      // pop each closer counter out of the stack    <- this gets position of closer and openner
-      // put closer and openner into map
+      if(c == '['){
+        myStack.push(counter);
+      }
+      else if((c == ']') && (!myStack.isEmpty())){
+        int temp = myStack.pop();
+        returnable.put(counter, temp);
+      }
+      else if (c == ']' && myStack.isEmpty()){
+        throw new IllegalArgumentException("Program Contains mismatched brackets 1");
+      }
+      counter++;
     }
-    return null;
+    if(!myStack.isEmpty()){
+      throw new IllegalArgumentException("Program Contains mismatched brackets 2");
+    }
+    return returnable;
   }
 
   /**
