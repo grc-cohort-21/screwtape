@@ -92,5 +92,36 @@ class NodeTest {
   }
 
   // TODO: Add test for Node with no next or prev
+  @Test 
+  void testToListWithOneValue() {
+    // Arrange
+    Node head = new Node(10);
+
+    // Act
+    List<Integer> value = head.toList();
+
+    // Assert
+    assertEquals(List.of(10), value);
+  }
+
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  // Test for nodes with multiple connections, but only return the last node in list
+  @Test
+  void testToListOnLastValue() {
+    // Arrange
+    Node head = new Node(15);
+    Node middle = new Node(20);
+    Node last = new Node(25);
+
+    head.next = middle;
+    middle.prev = head;
+    middle.next = last;
+    last.prev = middle;
+
+    // Act
+    List<Integer> value = last.toList();
+
+    // Assert
+    assertEquals(List.of(25), value);
+  }
 }
