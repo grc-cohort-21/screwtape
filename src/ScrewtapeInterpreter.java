@@ -180,6 +180,53 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    String endPrint = "";
+
+    Map<Integer, Integer> loopPlacements = bracketMap(program);
+
+    // Acts as an index
+    int pointer = 0;
+    while(pointer < program.length()) {
+      // Adding
+      if(program.charAt(pointer) == '+') {
+        tapePointer.value += 1;
+      }
+      // Subtracting
+      else if(program.charAt(pointer) == '-') {
+        tapePointer.value -=  1;
+      }
+      // Moving to the left
+      else if(program.charAt(pointer) == '<') {
+        // Creates a new node if one doesn't exist
+        if(tapePointer.prev == null) {
+          tapePointer.prev = new Node(0);
+        }
+        
+        tapePointer = tapePointer.prev;
+        tapePointer.next = tapeHead;
+        tapeHead = tapePointer;
+      }
+      // Moving to the right
+      else if(program.charAt(pointer) == '>') {
+        // Creates a new node if one doesn't exist
+        if(tapePointer.next == null) {
+          tapePointer.next = new Node(0);
+        }
+        Node tempPointer = tapePointer;
+        tapePointer = tapePointer.next;
+        tapePointer.prev = tempPointer;
+      }
+      // Printing the string and char from number
+      else if(program.charAt(pointer) == '.') {
+        endPrint += Character.toString((char) tapePointer.value);
+      }
+      // Handling loops
+      else {
+
+      }
+      pointer++;
+    }
+
+    return endPrint;
   }
 }
