@@ -108,21 +108,20 @@ public class ScrewtapeInterpreter {
    */
   public Map<Integer, Integer> bracketMap(String program) {
     // TODO: Implement this
-    //Stack<Character> unMatched = new Stack<Character>();
-    // for(int i = 0; i< program.length(); i++)
-    // {
-    //   if(program.charAt(i)=='[' || program.charAt(i)==']' )
-    //   {
-    //     unMatched.push(program.charAt(i));
-    //   }    
-    // }
-    // if(unMatched.size() % 2 != 0)
-    // {
-    //   throw new IllegalArgumentException("Unmatched brackets");
-    // }
+    Stack<Character> unMatched = new Stack<Character>();
+    for(int i = 0; i< program.length(); i++)
+    {
+      if(program.charAt(i)=='[' || program.charAt(i)==']' )
+      {
+        unMatched.push(program.charAt(i));
+      }    
+    }
+    if(unMatched.size() % 2 != 0)
+    {
+      throw new IllegalArgumentException("Unmatched brackets");
+    }
 
     Stack<Integer> openBracket = new Stack<Integer>();
-    Stack<Integer> closingBracket = new Stack<Integer>();
 
 
     Map<Integer,Integer> returningMap = new HashMap<Integer,Integer>();
@@ -135,16 +134,13 @@ public class ScrewtapeInterpreter {
       {
         openBracket.push(i);
       }
-      else if(program.charAt(i) == ']')
+      if(program.charAt(i) == ']')
       {
-        closingBracket.push(i);
+        returningMap.put(i, openBracket.pop());
       }
     }
 
-    while(!openBracket.empty())
-    {
-        returningMap.put(closingBracket.pop(), openBracket.pop());
-    }
+
 
     // Hint: use a stack
     return returningMap;
@@ -185,24 +181,33 @@ public class ScrewtapeInterpreter {
       }
       if(program.charAt(pointer) == '>')
       {
-        if(tapeHead.next != null)
+        if(tapeHead.next == null)
+        {
+          Node newNode = new Node(0);
+          tapeHead.next = newNode;
+          tapeHead.next= newNode;
+        }
+        else 
         {
           tapeHead = tapeHead.next;
         }
+
+
       }
       if(program.charAt(pointer) == '<')
       {
         if(tapeHead.prev != null)
         {
           tapeHead = tapeHead.prev;
-        }      }
+        }      
+      }
       if(program.charAt(pointer) == '[')
       {
         bracketVal = pointer;
       }
       if(program.charAt(pointer) == ']')
       {
-        if(tapeHead.next != null)
+        if(tapeHead.value == 0)
         {
           pointer = bracketVal;
         }
