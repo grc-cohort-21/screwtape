@@ -1,5 +1,8 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * A Screwtape interpreter that executes programs written in the Screwtape esoteric programming language.
@@ -105,9 +108,52 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public Map<Integer, Integer> bracketMap(String program) {
-    // TODO: Implement this
-    // Hint: use a stack
-    return null;
+    // Placements from start : end
+    Map<Integer, Integer> bracketPlacements = new HashMap<>();
+    Stack<Character> stack = new Stack<>();
+    // Other valid code in the language
+    List<Character> validCode = List.of('-', '+', '<', '>', '.');
+
+    // Used to get index
+    int count = 0;
+    // store the indexes to assign value when found
+    List<Integer> keyList = new ArrayList<>();
+    for(char oneCode : program.toCharArray()) {
+      // If it's a opening bracket
+      if(oneCode == '[') {
+        // Pushes information to everything
+        stack.push(oneCode);
+        bracketPlacements.put(count, null);
+        keyList.add(count);
+      }
+      // For ignoring other code in the program
+      else if(!validCode.contains(oneCode)) {
+        if(stack.empty()) {
+          throw new IllegalArgumentException("Missing opening bracket");
+        }
+
+        stack.pop();
+        char expected = ']';
+
+        if(oneCode != expected) {
+          throw new IllegalArgumentException("Missing closing bracket");
+        }
+
+        // Places the index in the value and removes the item from the list
+        bracketPlacements.put(keyList.get(keyList.size()-1), count);
+        keyList.remove(keyList.size()-1);
+      }
+      // Ups count for new index
+      count++;
+    }
+
+    // Reverses the keys and values to return what is required
+    Map<Integer, Integer> reversePlacements = new HashMap<>();
+    for(Map.Entry<Integer, Integer> entry : bracketPlacements.entrySet()) {
+      reversePlacements.put(entry.getValue(), entry.getKey());
+    }
+    // returns new map of placements
+    return reversePlacements;
   }
 
   /**
