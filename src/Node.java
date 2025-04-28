@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,10 +60,6 @@ public class Node {
         cur = tempNode;
       }
     }
-    // loop through list
-      // keep making new nodes because in a loop we can keep doing that
-      // shove value into it
-      // shove previous into it (probably need a current node)
   }
 
   /**
@@ -72,7 +69,12 @@ public class Node {
    * @return A list of integers representing the values in the linked list.
    */
   public List<Integer> toList() {
-    // TODO: Implement this
-    return null;
+    List<Integer> returnable = new ArrayList<>();
+    Node cur = this;
+    while(cur != null){
+      returnable.add(cur.value);
+      cur = cur.next;
+    }
+    return returnable;
   }
 }
