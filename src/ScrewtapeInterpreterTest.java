@@ -23,7 +23,38 @@ class ScrewtapeInterpreterTest {
     assertEquals(expectedMap, actualMap);
   }
 
-  // TODO: Implement more tests for bracketMap
+  @Test
+  void testOnlyOpenBracketMap() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    boolean thrown = false;
+    String program = "[[[[[";
+
+    try{
+    Map<Integer, Integer> failMap = interpreter.bracketMap(program);
+    }
+    catch(IllegalArgumentException e){
+      thrown = true;
+    }
+    assertTrue(thrown);
+  }
+
+  @Test
+  void testOnlyCloseBracketMap() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    boolean thrown = false;
+    String program = "]]]]";
+
+    try{
+    Map<Integer, Integer> failMap = interpreter.bracketMap(program);
+    }
+    catch(IllegalArgumentException e){
+      thrown = true;
+    }
+    assertTrue(thrown);
+  }
+
   // At a bare minimum, implement the other examples from the Javadoc and at least one more you come up with
 
   
