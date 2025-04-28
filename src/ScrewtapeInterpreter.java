@@ -1,5 +1,8 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
 
 /**
  * A Screwtape interpreter that executes programs written in the Screwtape esoteric programming language.
@@ -106,8 +109,33 @@ public class ScrewtapeInterpreter {
    */
   public Map<Integer, Integer> bracketMap(String program) {
     // TODO: Implement this
+
+    //location(index) of closing bracket as key and opening as value
+    //index comes from program passed as string (string is array)
+    //use stack to track match up for open and closing brackets 
+
     // Hint: use a stack
-    return null;
+
+    Map<Integer, Integer> brackets = new HashMap<>();
+    Stack<Integer> openBracketsIndex = new Stack<>();
+
+    for(int i = 0; i < program.length(); i++)
+    {
+      if(program.charAt(i) == '[')//opening
+      {
+        openBracketsIndex.push(i);
+      }
+
+      if(program.charAt(i) == ']') //closing
+      {
+        brackets.put(i, openBracketsIndex.pop());
+      }
+    }
+    if(!openBracketsIndex.isEmpty())
+    {
+      throw new IllegalArgumentException("Contains unmatched brackets");
+    }
+    return brackets;
   }
 
   /**
@@ -130,7 +158,116 @@ public class ScrewtapeInterpreter {
    */
   public String execute(String program) {
     // TODO: Implement this
-    // If you get stuck, you can look at hint.md for a hint
-    return null;
+
+    //create +, - functionality 
+    //< = move to prev(left), > = move to next (right)
+    //. = print value (cast int to char)
+    //loop functionality will be while or do while loop with conditions (until node value = 0)
+    
+    String result = "";
+    
+    Node currentNode = new Node(0);
+    tapeHead = currentNode;
+    tapePointer = currentNode;
+    Map<Integer, Integer> bMap = bracketMap(program);
+
+    for(int i = 0; i < program.length(); i++)
+    {
+      char currentSymbol = program.charAt(i);
+
+      //+ , - functionality
+      if(currentSymbol == '+')
+        tapePointer.value++;
+      else if(currentSymbol == '-')
+        tapePointer.value--;
+
+      //< (prev), > (next) functionality
+      else if(currentSymbol == '<')
+      {
+        if(tapePointer.prev == null)
+        {
+          Node newPrevNode = new Node(0);
+          currentNode.prev = newPrevNode;
+          newPrevNode.next = currentNode;
+          tapePointer = newPrevNode;
+          tapeHead = newPrevNode;
+          currentNode = newPrevNode;
+        }
+        else
+        {
+          tapePointer = tapePointer.prev;
+        }
+        
+      }
+      else if(currentSymbol == '>')
+      {
+        if(tapePointer.next == null)
+        {
+          Node newNextNode = new Node(0);
+          currentNode.next = newNextNode;
+          newNextNode.prev = currentNode;
+          tapePointer = newNextNode;
+          currentNode = newNextNode;
+        }
+        else
+        {
+          tapePointer = tapePointer.next;
+        }        
+      }
+
+      //outputting functionality
+      else if(currentSymbol == '.')
+      {
+        int charValue = tapePointer.value;
+        char casted = (char)charValue;
+        result += casted;
+      }
+
+      //loop functionality
+      if(currentSymbol == '[')
+      {
+        continue;
+      }
+      else if(currentSymbol == ']')
+      {
+        if(tapePointer.value != 0)
+        {
+          i = bMap.get(i);
+          // System.out.println(tapePointer.value);
+          // System.out.println(i);
+          // System.out.println(result);
+        }
+        else
+          continue;
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+      // if(bMap.values().contains(i))
+      // {
+      //   int closingIndex = 0;
+      //   for(int closing : bMap.keySet())
+      //   {
+      //     if(i == bMap.get(closing))
+      //     {
+      //       closingIndex = closing;
+      //     }
+      //   }
+
+      //   String loop = program.substring(i+1, closingIndex);        
+      //   //loop
+      //   int loopIndex = 0;
+    }
+    return result;      
   }
+    // If you get stuck, you can look at hint.md for a hint
 }

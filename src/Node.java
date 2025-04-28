@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +40,46 @@ public class Node {
    */
   public Node(List<Integer> list) {
     // TODO: implement this
+
+    //for loop using given list as index
+    //head is first node created using first element in given list
+    //next pointer points to new node created using next element in list
+    //prev prointer points back to node before current node
+    
+    //null or empty list
+    if(list == null)
+      throw new IllegalArgumentException("Null list");
+        
+    if(list.isEmpty())
+      throw new IllegalArgumentException("Empty List");
+    
+
+    Node pastNode = new Node(0); //dummy initial value that will be overwritten
+    for(int i = 0; i < list.size(); i++)
+    {
+      if(i == 0)
+      {
+        //pastNode.next = this;
+        this.value = list.get(i);
+        pastNode = this;
+        pastNode.prev = null;
+
+      }
+      else if (i == list.size()-1)
+      {
+        Node node = new Node(list.get(i));
+        pastNode.next = node;
+        node.prev = pastNode;
+        node.next = null;
+      }
+      else
+      {
+        Node node = new Node(list.get(i));
+        node.prev = pastNode;
+        pastNode.next = node;
+        pastNode = node;
+      }      
+    }
   }
 
   /**
@@ -49,6 +90,22 @@ public class Node {
    */
   public List<Integer> toList() {
     // TODO: Implement this
-    return null;
+    
+    //reverse of what was just done but perhaps simpler
+    //while loop to walk theough linked list using next to move forward
+    //add each value from nodes to list
+    //return list
+
+    List <Integer> list = new ArrayList<>();
+
+    Node node = this;
+
+    while(node != null)
+    {
+      list.add(node.value);
+      node = node.next;
+    }
+
+    return list;
   }
 }
