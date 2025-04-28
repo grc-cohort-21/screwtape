@@ -23,8 +23,37 @@ class ScrewtapeInterpreterTest {
     assertEquals(expectedMap, actualMap);
   }
 
-  // TODO: Implement more tests for bracketMap
-  // At a bare minimum, implement the other examples from the Javadoc and at least one more you come up with
+  @Test
+  void testNestedBracketMapTwo() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "{}";
+
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(1, 0);
+
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  void testNestedBracketMapThree() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[[[[[]]]]]";
+
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(9, 0);
+    expectedMap.put(8, 1);
+    expectedMap.put(7, 2);
+    expectedMap.put(6, 3);
+    expectedMap.put(5, 4);
+
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+    assertEquals(expectedMap, actualMap);
+  }
 
   
 
