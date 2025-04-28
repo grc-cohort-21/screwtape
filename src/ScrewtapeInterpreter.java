@@ -1,5 +1,4 @@
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A Screwtape interpreter that executes programs written in the Screwtape esoteric programming language.
@@ -105,9 +104,19 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public Map<Integer, Integer> bracketMap(String program) {
-    // TODO: Implement this
-    // Hint: use a stack
-    return null;
+    Map<Integer, Integer> map = new HashMap<>();
+    Stack<Integer> stack = new Stack<>();
+    char[] arr = program.toCharArray();
+    
+    for (int i = 0; i < arr.length; i++) {
+      if (arr[i] == '[') {
+        stack.push(i);
+      }
+      if (arr[i] == ']') {
+        map.put(i, stack.pop());
+      }
+    }
+    return map;
   }
 
   /**
@@ -129,8 +138,49 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public String execute(String program) {
-    // TODO: Implement this
-    // If you get stuck, you can look at hint.md for a hint
-    return null;
+    int pointer = 0;
+    String output = "";
+    Map<Integer, Integer> bracketMap = new HashMap<>(bracketMap(program));
+
+    while (pointer < program.length()) {
+      if (program.charAt(pointer) == '+') {
+        tapePointer.value++;
+      }
+      else if (program.charAt(pointer) == '-') {
+        tapePointer.value--;
+      }
+      else if (program.charAt(pointer) == '>') {
+        if(tapePointer.next != null) {
+          tapePointer = tapePointer.next;
+        }
+        else {
+          tapePointer.next = new Node(0);
+          tapePointer.next.prev = tapePointer;
+          tapePointer = tapePointer.next;
+        }
+      }
+      else if (program.charAt(pointer) == '<') {
+        if(tapePointer.prev != null) {
+          tapePointer = tapePointer.prev;
+        }
+        else {
+          tapePointer.prev = new Node(0);
+          tapePointer.prev.next = tapePointer;
+          tapePointer = tapePointer.prev;
+          tapeHead = tapePointer;
+        }
+      }
+      else if (program.charAt(pointer) == '.') {
+        char charValue = (char) tapePointer.value;
+        output += charValue;
+      }
+      else if (program.charAt(pointer) == ']') {
+        if (tapePointer.value != 0) {
+          pointer = bracketMap.get(pointer);
+        }
+      }
+      pointer++;
+    }
+    return output;
   }
 }

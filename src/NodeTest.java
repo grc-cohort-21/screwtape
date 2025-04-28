@@ -41,9 +41,46 @@ class NodeTest {
     );
   }
 
+  @Test
+  void testListConstructorWithNullList() {
+    // Arrange
+    List<Integer> nullList = new ArrayList<>();
+    nullList.add(null);
+    // Act and Assert
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> new Node(nullList),
+        "Expected constructor to throw IllegalArgumentException for a null list."
+    );
+  }
+
+  // @Test
+  // void testListConstructorWithNullListvalues() {
+  //   // Arrange
+  //   List<Integer> nullList = new ArrayList<>();
+  //   nullList.add(3);
+  //   nullList.add(null);
+  //   nullList.add(5);
+  //   // Act and Assert
+  //   assertThrows(
+  //       IllegalArgumentException.class,
+  //       () -> new Node(nullList),
+  //       "Expected constructor to throw IllegalArgumentException for a null list."
+  //   );
+  // }
   
-  // TODO: Add test for list constructor when passed null list
-  // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  @Test
+  void testListConstructorWithOneValue() {
+    // Arrange
+    List<Integer> values = List.of(5);
+
+    // Act
+    Node head = new Node(values);
+
+    // Assert
+    assertEquals(5, head.value);
+    assertNull(head.next);
+  }
 
 
   // -------- WAVE 2 -------
@@ -68,5 +105,36 @@ class NodeTest {
   }
 
   // TODO: Add test for Node with no next or prev
+  @Test
+  void testToListWithNoNextOrPrev() {
+    // Arrange
+    Node head = new Node(5);
+
+    // Act
+    List<Integer> values = head.toList();
+
+    // Assert
+    assertEquals(List.of(5), values);
+  }
+  
+  
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  @Test
+  void testToListFromMiddleValue() {
+    // Arrange
+    Node head = new Node(5);
+    Node middle = new Node(7);
+    Node tail = new Node(3);
+
+    head.next = middle;
+    middle.prev = head;
+    middle.next = tail;
+    tail.prev = middle;
+
+    // Act
+    List<Integer> values = middle.toList();
+
+    // Assert
+    assertEquals(List.of(7, 3), values);
+  }
 }

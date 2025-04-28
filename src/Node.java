@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents a Node in a doubly linked list.
@@ -38,7 +38,30 @@ public class Node {
    * @throws IllegalArgumentException If the list is null or empty.
    */
   public Node(List<Integer> list) {
-    // TODO: implement this
+    if (list.isEmpty()) {
+      throw new IllegalArgumentException("List can not be empty.");
+    }
+    if (list.get(0) == null) {
+      throw new IllegalArgumentException("List can not begin with null.");
+    }
+
+    // Logic for if list can not contain any null values
+    // for (int i = 0; i < list.size(); i++) {
+    //   if (list.get(i) == null) {
+    //     throw new IllegalArgumentException("List can not contain null values.");
+    //   }
+    // }
+
+    this.value = list.get(0);
+    Node current = this;
+    for (int i = 1; i < list.size(); i++) {
+      // System.out.println(list.get(i));
+      Node newNode = new Node(list.get(i));
+      current.next = newNode;
+      newNode.prev = current;
+      current = current.next;
+    }
+    
   }
 
   /**
@@ -48,7 +71,12 @@ public class Node {
    * @return A list of integers representing the values in the linked list.
    */
   public List<Integer> toList() {
-    // TODO: Implement this
-    return null;
+    List<Integer> list = new ArrayList<>();
+    Node current = this;
+    while (current != null) {
+      list.add(current.value);
+      current = current.next;
+    }
+    return list;
   }
 }
