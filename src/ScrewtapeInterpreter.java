@@ -140,6 +140,7 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     int pointer = 0;
     String output = "";
+    Map<Integer, Integer> bracketMap = new HashMap<>(bracketMap(program));
 
     while (pointer < program.length()) {
       if (program.charAt(pointer) == '+') {
@@ -154,6 +155,7 @@ public class ScrewtapeInterpreter {
         }
         else {
           tapePointer.next = new Node(0);
+          tapePointer.next.prev = tapePointer;
           tapePointer = tapePointer.next;
         }
       }
@@ -173,7 +175,9 @@ public class ScrewtapeInterpreter {
         output += charValue;
       }
       else if (program.charAt(pointer) == ']') {
-        
+        if (tapePointer.value != 0) {
+          pointer = bracketMap.get(pointer);
+        }
       }
       pointer++;
     }
