@@ -143,7 +143,7 @@ public class ScrewtapeInterpreter {
 
     while(!openBracket.empty())
     {
-        returningMap.put(openBracket.pop(), closingBracket.pop());
+        returningMap.put(closingBracket.pop(), openBracket.pop());
     }
 
     // Hint: use a stack
@@ -169,8 +169,48 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public String execute(String program) {
-    // TODO: Implement this
+    Node current = tapeHead;
+    int pointer = 0;
+    int bracketVal = 0;
+    String output = "";
+    while(pointer < program.length())
+    {
+      if(program.charAt(pointer) == '+')
+      {
+        tapeHead.value++;
+      }
+      if(program.charAt(pointer) == '-')
+      {
+        tapeHead.value--;
+      }
+      if(program.charAt(pointer) == '>')
+      {
+        if(tapeHead.next != null)
+        {
+          tapeHead = tapeHead.next;
+        }
+      }
+      if(program.charAt(pointer) == '<')
+      {
+        if(tapeHead.prev != null)
+        {
+          tapeHead = tapeHead.prev;
+        }      }
+      if(program.charAt(pointer) == '[')
+      {
+        bracketVal = pointer;
+      }
+      if(program.charAt(pointer) == ']')
+      {
+        if(tapeHead.next != null)
+        {
+          pointer = bracketVal;
+        }
+      }
+
+      pointer++;
+    }
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    return output;
   }
 }

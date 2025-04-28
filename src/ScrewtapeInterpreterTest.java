@@ -32,9 +32,9 @@ class ScrewtapeInterpreterTest {
     String program = "[+++][---]<<[]";
 
     Map<Integer, Integer> expectedMap = new HashMap<>();
-    expectedMap.put(0, 4);
-    expectedMap.put(5, 9);
-    expectedMap.put(12, 13);
+    expectedMap.put(4, 0);
+    expectedMap.put(9, 5);
+    expectedMap.put(13, 12);
 
 
     Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
@@ -49,9 +49,9 @@ class ScrewtapeInterpreterTest {
     String program = "[+++][---]<<[+]";
 
     Map<Integer, Integer> expectedMap = new HashMap<>();
-    expectedMap.put(0, 4);
-    expectedMap.put(5, 9);
-    expectedMap.put(12, 14);
+    expectedMap.put(4, 0);
+    expectedMap.put(9, 5);
+    expectedMap.put(14, 12);
 
     Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
 
