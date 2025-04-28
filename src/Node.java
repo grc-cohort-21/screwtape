@@ -19,6 +19,12 @@ public class Node {
    *
    * @param value The value to store in this node.
    */
+
+  public Node(){
+    this.next = null;
+    this.prev = null;
+  }
+
   public Node(int value) {
     this.value = value;
   }
@@ -39,6 +45,14 @@ public class Node {
    */
   public Node(List<Integer> list) {
     // TODO: implement this
+    this.value = list.get(0); //get object in front of list
+    Node current = this; //start the linked list
+
+    for(int i = 1; i < list.size(); i++){
+      Node nextNode = new Node();
+      nextNode.value = list.get(i);
+
+    }
   }
 
   /**
