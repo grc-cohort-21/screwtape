@@ -182,7 +182,7 @@ public class ScrewtapeInterpreter {
     // If you get stuck, you can look at hint.md for a hint
     String endPrint = "";
 
-    Map<Integer, Integer> loopPlacements = bracketMap(program);
+    Map<Integer, Integer> loopPlacements = this.bracketMap(program);
 
     // Acts as an index
     int pointer = 0;
@@ -200,10 +200,10 @@ public class ScrewtapeInterpreter {
         // Creates a new node if one doesn't exist
         if(tapePointer.prev == null) {
           tapePointer.prev = new Node(0);
+          tapePointer.prev.next = tapePointer;
         }
         
         tapePointer = tapePointer.prev;
-        tapePointer.next = tapeHead;
         tapeHead = tapePointer;
       }
       // Moving to the right
@@ -221,8 +221,11 @@ public class ScrewtapeInterpreter {
         endPrint += Character.toString((char) tapePointer.value);
       }
       // Handling loops
-      else {
-
+      else if(program.charAt(pointer) == ']') {
+        if(tapePointer.value != 0) {
+          pointer = loopPlacements.get(pointer);
+        }
+        
       }
       pointer++;
     }
