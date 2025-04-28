@@ -38,7 +38,23 @@ public class Node {
    * @throws IllegalArgumentException If the list is null or empty.
    */
   public Node(List<Integer> list) {
-    // TODO: implement this
+    // Checks for null or empty list
+    if(list == null || list.isEmpty()) {
+      throw new IllegalArgumentException("List can't be null or empty");
+    }
+
+    // Sets the starting point and pointer
+    this.value = list.get(0);
+    Node current = this;
+    // Goes through the list
+    for (int i = 1; i < list.size(); i++) {
+      // Makes the Node for next
+      current.next = new Node(list.get(i));
+      // Sets previous for the next Node to the current Node
+      current.next.prev = current;
+      // Sets the next to the pointer
+      current = current.next;
+    }
   }
 
   /**

@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,7 +44,47 @@ class NodeTest {
 
   
   // TODO: Add test for list constructor when passed null list
+  @Test
+  void testListConstructorWithNullList() {
+    // Arrange
+    List<Integer> nullList = null;
+
+    // Act and Assert
+    assertThrows(
+      IllegalArgumentException.class,
+        () -> new Node(nullList),
+        "Expected constructor to throw IllegalArgumentException for a null list."
+    );
+  }
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  @Test
+  void testListConstructorWithSingleElement() {
+    // Arrange
+    List<Integer> value = List.of(24);
+
+    // Act
+    Node head = new Node(value);
+
+    // Assert
+    assertEquals(24, head.value);
+    assertEquals(null, head.prev);
+    assertEquals(null, head.next);
+  }
+
+  @Test
+  void testListConstructorWithNegativeElements() {
+    // Arrange
+    List<Integer> values = List.of(-36, -52);
+
+    // Act
+    Node head = new Node(values);
+    // Assert
+    assertEquals(-36, head.value);
+    assertNotNull(head.next);
+    assertEquals(-52, head.next.value);
+    assertNull(head.next.next);
+    assertEquals(head, head.next.prev);
+  }
 
 
   // -------- WAVE 2 -------
