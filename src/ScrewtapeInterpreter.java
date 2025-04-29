@@ -129,6 +129,7 @@ public class ScrewtapeInterpreter {
         throw new IllegalArgumentException("Unmatched opening bracket(s) at index: " + stack);
     }
 
+
     return map;
   }
 
@@ -152,7 +153,55 @@ public class ScrewtapeInterpreter {
    */
   public String execute(String program) {
     // TODO: Implement this
-    // If you get stuck, you can look at hint.md for a hint
-    return null;
+    StringBuilder output = new StringBuilder();
+
+    tapePointer = new Node();
+    int programPointer = 0;
+    Map<Integer, Integer> bracketMap = bracketMap(program);
+
+    while (programPointer < program.length()) {
+      char command = program.charAt(programPointer);
+
+      switch (command) {
+          case '+':
+              tapePointer.value++;
+              break;
+          case '-':
+              tapePointer.value--;
+              break;
+          case '>':
+              if (tapePointer.next == null) {
+                  tapePointer.next = new Node();
+                  tapePointer.next.prev = tapePointer;
+              }
+              tapePointer = tapePointer.next;
+              break;
+          case '<':
+              if (tapePointer.prev == null) {
+                  tapePointer.prev = new Node();
+                  tapePointer.prev.next = tapePointer;
+              }
+              tapePointer = tapePointer.prev;
+              break;
+          case '.':
+              System.out.print((char) (tapePointer.value));
+              break;
+          case '[':
+              if (tapePointer.value == 0) {
+                  programPointer = bracketMap.get(programPointer);
+              }
+              break;
+          case ']':
+              if (tapePointer.value != 0) {
+                  programPointer = bracketMap.get(programPointer);
+              }
+              break;
+          default:
+      }
+
+      programPointer++;
+    }
+
+    return output.toString();
   }
 }
