@@ -41,10 +41,16 @@ class NodeTest {
     );
   }
 
-  
   // TODO: Add test for list constructor when passed null list
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
-
+  @Test
+  void testListConstructorWithNull() {
+      assertThrows(
+          NullPointerException.class,
+          () -> new Node(null),
+          "Expected constructor to throw NullPointerException for a null list."
+      );
+  }
 
   // -------- WAVE 2 -------
 

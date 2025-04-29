@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,12 @@ public class Node {
    *
    * @param value The value to store in this node.
    */
+
+  public Node(){
+    this.next = null;
+    this.prev = null;
+  }
+
   public Node(int value) {
     this.value = value;
   }
@@ -39,6 +46,21 @@ public class Node {
    */
   public Node(List<Integer> list) {
     // TODO: implement this
+    if(list.isEmpty()){
+      throw new IllegalArgumentException();
+    }
+
+
+    this.value = list.get(0); //get object in front of list
+    Node current = this; //start the linked list
+
+    for(int i = 1; i < list.size(); i++){
+      Node nextNode = new Node();
+      nextNode.value = list.get(i);
+      current.next = nextNode;
+      nextNode.prev = current;
+      current = nextNode;
+    }
   }
 
   /**
@@ -49,6 +71,14 @@ public class Node {
    */
   public List<Integer> toList() {
     // TODO: Implement this
-    return null;
+    List<Integer> list = new ArrayList<>();
+    Node current = this;
+
+    while(current != null){
+      list.add(current.value);
+      current = current.next;
+    }
+
+    return list;
   }
 }
