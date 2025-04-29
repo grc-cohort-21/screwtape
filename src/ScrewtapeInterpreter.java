@@ -154,44 +154,49 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
-    Map<Integer, Integer> brackets = bracketMap(program);
     String output = "";
 
-    for (int i = 0; i < program.length(); i++) {
-      if (program.charAt(i) == '+') {
-        tapePointer.value = tapePointer.value + 1;
-      }
-      else if (program.charAt(i) == '-') {
-        tapePointer.value = tapePointer.value - 1;
-      }
-      else if (program.charAt(i) == '>') {
-        if (tapePointer.next == null) {
-          Node newValue = new Node(0);
-          tapePointer.next = newValue;
-          newValue.prev = tapePointer;
-        }
-        tapePointer = tapePointer.next;
-      }
-      else if (program.charAt(i) == '<') {
-        if (tapePointer.prev == null) {
-          Node newValue = new Node(0);
-          newValue.next = tapePointer;
-          tapePointer.prev = newValue;
-          tapeHead = newValue;
-        }
-        tapePointer = tapePointer.prev;
-      }
-      else if (program.charAt(i) == '.') {
-        char characterOutput = (char) getTapePointerValue();
-        output += characterOutput;
-      }
-      else if (program.charAt(i) == ']') {
-        if (getTapePointerValue() != 0) {
-          i = brackets.get(i);
-        }
-      }
-    }
+    try {
+      Map<Integer, Integer> brackets = bracketMap(program);
 
+      for (int i = 0; i < program.length(); i++) {
+        if (program.charAt(i) == '+') {
+          tapePointer.value = tapePointer.value + 1;
+        }
+        else if (program.charAt(i) == '-') {
+          tapePointer.value = tapePointer.value - 1;
+        }
+        else if (program.charAt(i) == '>') {
+          if (tapePointer.next == null) {
+            Node newValue = new Node(0);
+            tapePointer.next = newValue;
+            newValue.prev = tapePointer;
+          }
+          tapePointer = tapePointer.next;
+        }
+        else if (program.charAt(i) == '<') {
+          if (tapePointer.prev == null) {
+            Node newValue = new Node(0);
+            newValue.next = tapePointer;
+            tapePointer.prev = newValue;
+            tapeHead = newValue;
+          }
+          tapePointer = tapePointer.prev;
+        }
+        else if (program.charAt(i) == '.') {
+          char characterOutput = (char) getTapePointerValue();
+          output += characterOutput;
+        }
+        else if (program.charAt(i) == ']') {
+          if (getTapePointerValue() != 0) {
+            i = brackets.get(i);
+          }
+        }
+      }
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Contains unmatched brackets.");
+    }
+    
     return output;
   }
 }
