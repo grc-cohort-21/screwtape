@@ -148,14 +148,16 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public String execute(String program) {
-    // have the bracket map go through it just to get the info early
-    // have a counter to point at pointer position
-    // have an empty string builder
-    // loop through the program until we get to the end
-      // if plus
-        // do plus stuff
-      // if minus
-        // do minus stuff
+    Map<Integer, Integer> brackets = bracketMap(program);
+    String returnable = "";
+    for(int i = 0; i < program.length(); i++){
+      char c = program.charAt(i);
+      if(c == '+'){
+        tapePointer.value = tapePointer.value + 1;
+      }
+      else if (c == '-'){
+        tapePointer.value = tapePointer.value - 1;
+      }
       // if left
         // do left stuff
       // if right
@@ -164,7 +166,7 @@ public class ScrewtapeInterpreter {
         // do output stuff
       // if loop
         // do loop stuff
-    //
+    }
     // If you get stuck, you can look at hint.md for a hint
     return null;
   }
