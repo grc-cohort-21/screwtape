@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -156,6 +157,50 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    Map<Integer, Integer> bracketMap = bracketMap(program);
+    //collect output
+    StringBuilder output = new StringBuilder();
+    int instructionPointer =0;
+    
+
+    while (instructionPointer < program.length()) {
+      char command = program.charAt(instructionPointer);
+
+      if (command == '+') {
+          tapePointer.value++;
+      } else if (command == '-') {
+          tapePointer.value--;
+      } else if (command == '>') {
+          if (tapePointer.next == null) {
+              Node newNode = new Node(0);
+              tapePointer.next = newNode;
+              newNode.prev = tapePointer;
+          }
+          tapePointer = tapePointer.next;
+      } else if (command == '<') {
+          if (tapePointer.prev == null) {
+              Node newNode = new Node(0);
+              tapePointer.prev = newNode;
+              newNode.next = tapePointer;
+              tapeHead = newNode;
+          }
+          tapePointer = tapePointer.prev;
+      } else if (command == '.') {
+          output.append((char) tapePointer.value);
+      } else if (command == '[') {
+          if (tapePointer.value == 0) {
+              instructionPointer = bracketMap.get(instructionPointer);
+          }
+      } else if (command == ']') {
+          if (tapePointer.value != 0) {
+              instructionPointer = bracketMap.get(instructionPointer);
+          }
+      }
+      instructionPointer++;
   }
+
+  return output.toString();
+}
+
+   
 }
