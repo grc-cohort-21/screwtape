@@ -107,8 +107,6 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public Map<Integer, Integer> bracketMap(String program) {
-    // TODO: Implement this
-    // Hint: use a stack
     Map<Integer, Integer> map = new HashMap<>();
     Stack<Integer> stack = new Stack<>();
 
@@ -118,18 +116,16 @@ public class ScrewtapeInterpreter {
             stack.push(i);
         } else if (ch == ']') {
             if (stack.isEmpty()) {
-                throw new IllegalArgumentException("Not closed " + i);
+                throw new IllegalArgumentException("No matching '[' for ']' at program position " + i);
             }
             int openIndex = stack.pop();
-            // map.put(openIndex, i);
-            map.put(i, openIndex);
+            map.put(i, openIndex); // Only map ] -> [
         }
     }
 
     if (!stack.isEmpty()) {
-        throw new IllegalArgumentException("Unmatched opening bracket(s) at index: " + stack);
+        throw new IllegalArgumentException("No matching ']' for '[' at program position " + stack.peek());
     }
-
 
     return map;
   }
@@ -158,7 +154,9 @@ public class ScrewtapeInterpreter {
 
     tapePointer = tapeHead;
     int programPointer = 0;
-    Map<Integer, Integer> bracketMap = bracketMap(program);
+    Map<Integer, Integer> bracketMap = program.contains("[") || program.contains("]")
+        ? bracketMap(program)
+        : new HashMap<>();
 
     while (programPointer < program.length()) {
       char command = program.charAt(programPointer);
@@ -173,7 +171,6 @@ public class ScrewtapeInterpreter {
         if (tapePointer.next == null) {
           tapePointer.next = new Node();
           tapePointer.next.prev = tapePointer;
-          
         }
         tapePointer = tapePointer.next;
       } else if (command == '<') {
@@ -185,16 +182,23 @@ public class ScrewtapeInterpreter {
         tapePointer = tapePointer.prev;
       } else if (command == '.') {
         output.append((char) tapePointer.value);
-      } else if (command == '[') {
-        if (tapePointer.value == 0) {
-          programPointer = bracketMap.get(programPointer);
-          // jumped = true;
-        }
+      // } else if (command == '[') {
+      //   if (tapePointer.value == 0) {
+      //       Integer matchingIndex = bracketMap.get(programPointer);
+      //       if (matchingIndex == null) {
+      //           throw new IllegalArgumentException("Unmatched '[' at position " + programPointer);
+      //       }
+      //       programPointer = matchingIndex;
+      //   }
       } else if (command == ']') {
-        if (tapePointer.value != 0) {
-          programPointer = bracketMap.get(programPointer);
-          // jumped = true;
-        }
+          if (tapePointer.value != 0) {
+              Integer matchingIndex = bracketMap.get(programPointer);
+              if (matchingIndex == null) {
+                  throw new IllegalArgumentException("Unmatched ']' at position " + programPointer);
+              }
+              programPointer = matchingIndex;
+              continue; 
+          }
       }
     
       if (!(command == ']' && tapePointer.value != 0)) {
