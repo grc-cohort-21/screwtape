@@ -61,10 +61,8 @@ public class Node {
   public List<Integer> toList() {
     // TODO: Implement this
     List<Integer> list = new ArrayList<>();
-
-    Node current = this;
-
-    while (current != null)
+     Node current = this;
+     while (current != null)
     {
       list.add(current.value);
       current = current.next;
