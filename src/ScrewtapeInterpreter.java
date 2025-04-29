@@ -125,12 +125,12 @@ public class ScrewtapeInterpreter {
 
     char myArray[] = program.toCharArray();
 
-    for (char letter : myArray) // example input: `[+++][---]<<[+]`
+    for (char letter : myArray)
     {
       if (letter == openingBracket)
       {
         stack.push(index);
-      } else if (letter == closingBracket) // ex input: `[>]]`
+      } else if (letter == closingBracket)
       {
         if (stack.empty())
         {
@@ -138,7 +138,7 @@ public class ScrewtapeInterpreter {
         }
         returnMap.put(index, stack.pop());
       }
-      index++;  // if letter is anything else, just add to index
+      index++;  // If letter is anything else, just add to index
     }
 
     if (!stack.empty())
@@ -198,7 +198,7 @@ public class ScrewtapeInterpreter {
         current = tapePointer;
       } else if (program.charAt(index) == '<')
       {
-        if (tapePointer.prev != null) // example: "<<++"  expected: [2, 0, 0] / actual: [0]
+        if (tapePointer.prev != null)
         {
           tapePointer = tapePointer.prev;
         } else
@@ -225,10 +225,10 @@ public class ScrewtapeInterpreter {
       else if (program.charAt(index) == ']') // instructionpointer/index: 9
       {
         // If the value in the current memory node is not 0, jump back to the matching `[`.
-        if (tapePointer.value != 0) // if current val (2) != 0
+        if (tapePointer.value != 0)
         {
           index = map.get(index);
-          index--;        
+          index--; // account for index++ at the end
         }
       }
 
