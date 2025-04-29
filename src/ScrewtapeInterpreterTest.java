@@ -24,8 +24,28 @@ class ScrewtapeInterpreterTest {
   }
 
   // TODO: Implement more tests for bracketMap
-  // At a bare minimum, implement the other examples from the Javadoc and at least one more you come up with
-
+   // Test empty loop brackets
+   @Test
+   void testEmptyLoopBrackets() {
+     ScrewtapeInterpreter si = new ScrewtapeInterpreter();
+     Map<Integer, Integer> result = si.bracketMap("[]");
+     assertEquals(Map.of(1,0), result); // Single empty loop
+   }
+ 
+   @Test
+void testMultipleLoops() {
+    ScrewtapeInterpreter si = new ScrewtapeInterpreter();
+    
+    // Program: [++][--]
+    // Indexes: 0 1 23 4 5 67
+    String program = "[++][--]";
+    
+    Map<Integer, Integer> result = si.bracketMap(program);
+    
+    // First loop: ] at index 3 -> [ at index 0
+    // Second loop: ] at index 7 -> [ at index 4
+    assertEquals(Map.of(3, 0, 7, 4), result);
+}
   
 
   @Test
