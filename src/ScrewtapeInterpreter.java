@@ -175,12 +175,13 @@ public class ScrewtapeInterpreter {
         }
         tapePointer = tapePointer.next;
       }
-      // if output
-        // do output stuff
+      else if (c == '.'){
+        returnable += (char)tapePointer.value;
+      }
       // if loop
         // do loop stuff
     }
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    return returnable;
   }
 }
