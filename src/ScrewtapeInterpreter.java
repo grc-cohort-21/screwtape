@@ -158,10 +158,23 @@ public class ScrewtapeInterpreter {
       else if (c == '-'){
         tapePointer.value = tapePointer.value - 1;
       }
-      // if left
-        // do left stuff
-      // if right
-        // do right stuff
+      else if (c == '<'){
+        if (tapePointer.prev == null){
+          Node temp = new Node(0);
+          tapePointer.prev = temp;
+          temp.next = tapePointer;
+          tapeHead = temp;
+        }
+        tapePointer = tapePointer.prev;
+      }
+      else if (c == '>'){
+        if (tapePointer.next == null){
+          Node temp = new Node(0);
+          tapePointer.next = temp;
+          temp.prev = tapePointer;
+        }
+        tapePointer = tapePointer.next;
+      }
       // if output
         // do output stuff
       // if loop
