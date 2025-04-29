@@ -121,6 +121,7 @@ public class ScrewtapeInterpreter {
                 throw new IllegalArgumentException("Not closed " + i);
             }
             int openIndex = stack.pop();
+            // map.put(openIndex, i);
             map.put(i, openIndex);
         }
     }
@@ -155,51 +156,48 @@ public class ScrewtapeInterpreter {
     // TODO: Implement this
     StringBuilder output = new StringBuilder();
 
-    tapePointer = new Node();
+    tapePointer = tapeHead;
     int programPointer = 0;
     Map<Integer, Integer> bracketMap = bracketMap(program);
 
     while (programPointer < program.length()) {
       char command = program.charAt(programPointer);
-
-      switch (command) {
-          case '+':
-              tapePointer.value++;
-              break;
-          case '-':
-              tapePointer.value--;
-              break;
-          case '>':
-              if (tapePointer.next == null) {
-                  tapePointer.next = new Node();
-                  tapePointer.next.prev = tapePointer;
-              }
-              tapePointer = tapePointer.next;
-              break;
-          case '<':
-              if (tapePointer.prev == null) {
-                  tapePointer.prev = new Node();
-                  tapePointer.prev.next = tapePointer;
-              }
-              tapePointer = tapePointer.prev;
-              break;
-          case '.':
-              System.out.print((char) (tapePointer.value));
-              break;
-          case '[':
-              if (tapePointer.value == 0) {
-                  programPointer = bracketMap.get(programPointer);
-              }
-              break;
-          case ']':
-              if (tapePointer.value != 0) {
-                  programPointer = bracketMap.get(programPointer);
-              }
-              break;
-          default:
+    
+      boolean jumped = false;
+    
+      if (command == '+') {
+        tapePointer.value++;
+      } else if (command == '-') {
+        tapePointer.value--;
+      } else if (command == '>') {
+        if (tapePointer.next == null) {
+          tapePointer.next = new Node();
+          tapePointer.next.prev = tapePointer;
+        }
+        tapePointer = tapePointer.next;
+      } else if (command == '<') {
+        if (tapePointer.prev == null) {
+          tapePointer.prev = new Node();
+          tapePointer.prev.next = tapePointer;
+        }
+        tapePointer = tapePointer.prev;
+      } else if (command == '.') {
+        output.append((char) tapePointer.value);
+      } else if (command == '[') {
+        if (tapePointer.value == 0) {
+          programPointer = bracketMap.get(programPointer);
+          jumped = true;
+        }
+      } else if (command == ']') {
+        if (tapePointer.value != 0) {
+          programPointer = bracketMap.get(programPointer);
+          jumped = true;
+        }
       }
-
-      programPointer++;
+    
+      if (!jumped) {
+        programPointer++;
+      }
     }
 
     return output.toString();
