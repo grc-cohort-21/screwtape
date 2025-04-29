@@ -1,5 +1,9 @@
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.Stack;
+
+
 
 /**
  * A Screwtape interpreter that executes programs written in the Screwtape esoteric programming language.
@@ -107,7 +111,19 @@ public class ScrewtapeInterpreter {
   public Map<Integer, Integer> bracketMap(String program) {
     // TODO: Implement this
     // Hint: use a stack
-    return null;
+
+      Stack<Integer> stack = new Stack<>();
+      Map<Integer, Integer> map = new HashMap<>();
+  
+      for (int i = 0; i < program.length(); i++) {
+        if (program.charAt(i) == '[') {
+          stack.push(i);
+        } else if (program.charAt(i) == ']') {
+          map.put(i, stack.pop());
+        }
+      }
+
+    return map;
   }
 
   /**
@@ -131,6 +147,43 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    Map<Integer, Integer> bracketLinks = bracketMap(program);
+    StringBuilder result = new StringBuilder();
+
+    for (int index = 0; index < program.length(); index++) {
+        char command = program.charAt(index);
+
+        if (command == '+') {
+            tapePointer.value++;
+        } 
+        else if (command == '-') {
+            tapePointer.value--;
+        } 
+        else if (command == '>') {
+            if (tapePointer.next == null) {
+                tapePointer.next = new Node(0);
+                tapePointer.next.prev = tapePointer;
+            }
+            tapePointer = tapePointer.next;
+        } 
+        else if (command == '<') {
+            if (tapePointer.prev == null) {
+                tapePointer.prev = new Node(0);
+                tapePointer.prev.next = tapePointer;
+                tapeHead = tapePointer.prev;
+            }
+            tapePointer = tapePointer.prev;
+        } 
+        else if (command == '.') {
+            result.append((char) tapePointer.value);
+        } 
+        else if (command == ']') {
+            if (tapePointer.value != 0) {
+                index = bracketLinks.get(index);
+            }
+        }
+    }
+
+    return result.toString();
   }
 }
