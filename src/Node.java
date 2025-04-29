@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,6 +46,11 @@ public class Node {
    */
   public Node(List<Integer> list) {
     // TODO: implement this
+    if(list.isEmpty()){
+      throw new IllegalArgumentException();
+    }
+
+
     this.value = list.get(0); //get object in front of list
     Node current = this; //start the linked list
 
@@ -65,6 +71,14 @@ public class Node {
    */
   public List<Integer> toList() {
     // TODO: Implement this
-    return null;
+    List<Integer> list = new ArrayList<>();
+    Node current = this;
+
+    while(current != null){
+      list.add(current.value);
+      current = current.next;
+    }
+
+    return list;
   }
 }
