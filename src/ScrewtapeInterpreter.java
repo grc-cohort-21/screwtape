@@ -1,5 +1,7 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * A Screwtape interpreter that executes programs written in the Screwtape esoteric programming language.
@@ -107,7 +109,27 @@ public class ScrewtapeInterpreter {
   public Map<Integer, Integer> bracketMap(String program) {
     // TODO: Implement this
     // Hint: use a stack
-    return null;
+    Map<Integer, Integer> map = new HashMap<>();
+    Stack<Integer> stack = new Stack<>();
+
+    for (int i = 0; i < program.length(); i++) {
+        char ch = program.charAt(i);
+        if (ch == '[') {
+            stack.push(i);
+        } else if (ch == ']') {
+            if (stack.isEmpty()) {
+                throw new IllegalArgumentException("Not closed " + i);
+            }
+            int openIndex = stack.pop();
+            map.put(i, openIndex);
+        }
+    }
+
+    if (!stack.isEmpty()) {
+        throw new IllegalArgumentException("Unmatched opening bracket(s) at index: " + stack);
+    }
+
+    return map;
   }
 
   /**
