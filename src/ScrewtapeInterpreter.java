@@ -163,7 +163,7 @@ public class ScrewtapeInterpreter {
     while (programPointer < program.length()) {
       char command = program.charAt(programPointer);
     
-      boolean jumped = false;
+      // boolean jumped = false;
     
       if (command == '+') {
         tapePointer.value++;
@@ -173,12 +173,14 @@ public class ScrewtapeInterpreter {
         if (tapePointer.next == null) {
           tapePointer.next = new Node();
           tapePointer.next.prev = tapePointer;
+          
         }
         tapePointer = tapePointer.next;
       } else if (command == '<') {
         if (tapePointer.prev == null) {
           tapePointer.prev = new Node();
           tapePointer.prev.next = tapePointer;
+          tapeHead = tapePointer.prev;
         }
         tapePointer = tapePointer.prev;
       } else if (command == '.') {
@@ -186,16 +188,16 @@ public class ScrewtapeInterpreter {
       } else if (command == '[') {
         if (tapePointer.value == 0) {
           programPointer = bracketMap.get(programPointer);
-          jumped = true;
+          // jumped = true;
         }
       } else if (command == ']') {
         if (tapePointer.value != 0) {
           programPointer = bracketMap.get(programPointer);
-          jumped = true;
+          // jumped = true;
         }
       }
     
-      if (!jumped) {
+      if (!(command == ']' && tapePointer.value != 0)) {
         programPointer++;
       }
     }
