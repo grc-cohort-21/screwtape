@@ -67,6 +67,22 @@ class NodeTest {
     assertEquals(List.of(5, 7, 3), values);
   }
 
+  @Test
+  void testToListWithOneValue() {
+    Node head = new Node(5);
+    List<Integer> values = head.toList();
+    assertEquals(List.of(5), values);
+  }
+
+  // cant figure out how to do a null test right now -
+  // will proceed with wave 3 and 4 then come back.
+  // I know its bad practice :D
+  @Test
+  void testToListWithNullValue() {
+    List<Integer> values = List.of(null, null, null);
+    assertThrows(NullPointerException.class, () -> new Node(values));
+  }
+
   // TODO: Add test for Node with no next or prev
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
 }
