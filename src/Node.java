@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +39,26 @@ public class Node {
    * @throws IllegalArgumentException If the list is null or empty.
    */
   public Node(List<Integer> list) {
+
+    if(list.size() == 0)
+    {
+      throw new IllegalArgumentException("Cannot have null values");
+    }
+    if(list.size() > 0)
+    {
+      this.value = list.get(0);
+    }
+    Node current = this;
+
+    for(int i = 1; i < list.size(); i++)
+    {
+      Node newNode = new Node(list.get(i));
+      current.next = newNode;
+      newNode.prev = current;
+      current = newNode;
+    }
+    
+    
     // TODO: implement this
   }
 
@@ -48,7 +69,20 @@ public class Node {
    * @return A list of integers representing the values in the linked list.
    */
   public List<Integer> toList() {
+    List<Integer> list = new ArrayList<Integer>();
+
+    Node current = this;
+
+     list.add(current.value);
+     while(current != null)
+     {
+      list.add(current.value);
+      current = current.next;
+     }
+     list.remove(0);
+
+    
     // TODO: Implement this
-    return null;
+    return list;
   }
 }

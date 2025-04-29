@@ -1,5 +1,7 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * A Screwtape interpreter that executes programs written in the Screwtape esoteric programming language.
@@ -106,8 +108,42 @@ public class ScrewtapeInterpreter {
    */
   public Map<Integer, Integer> bracketMap(String program) {
     // TODO: Implement this
+    Stack<Character> unMatched = new Stack<Character>();
+    for(int i = 0; i< program.length(); i++)
+    {
+      if(program.charAt(i)=='[' || program.charAt(i)==']' )
+      {
+        unMatched.push(program.charAt(i));
+      }    
+    }
+    if(unMatched.size() % 2 != 0)
+    {
+      throw new IllegalArgumentException("Unmatched brackets");
+    }
+
+    Stack<Integer> openBracket = new Stack<Integer>();
+
+
+    Map<Integer,Integer> returningMap = new HashMap<Integer,Integer>();
+
+
+
+    for(int i = 0; i < program.length(); i++)
+    {
+      if(program.charAt(i)=='[')
+      {
+        openBracket.push(i);
+      }
+      if(program.charAt(i) == ']')
+      {
+        returningMap.put(i, openBracket.pop());
+      }
+    }
+
+
+
     // Hint: use a stack
-    return null;
+    return returningMap;
   }
 
   /**
@@ -129,8 +165,53 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public String execute(String program) {
-    // TODO: Implement this
+
+    int pointer = 0;
+    int bracketVal = 0;
+    String output = "";
+    while(pointer < program.length())
+    {
+      if(program.charAt(pointer) == '+')
+      {
+        tapeHead.value++;
+      }
+      if(program.charAt(pointer) == '-')
+      {
+        tapeHead.value--;
+      }
+      if(program.charAt(pointer) == '>')
+      {
+          Node newNode = new Node(0);
+          tapeHead.next = newNode;
+          tapePointer = tapeHead.next;        
+      }
+      if(program.charAt(pointer) == '<')
+      {
+        if(tapeHead.prev != null)
+        {
+          tapeHead = tapeHead.prev;
+        }      
+      }
+      if(program.charAt(pointer) == '[')
+      {
+        bracketVal = pointer;
+      }
+      if(program.charAt(pointer) == ']')
+      {
+        if(tapeHead.value == 0)
+        {
+          pointer = bracketVal;
+        }
+      }
+      if(program.charAt(pointer) == '.')
+      {
+        char ch = (char) tapeHead.value;
+        output += ch;    
+      }
+
+      pointer++;
+    }
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    return output;
   }
 }
