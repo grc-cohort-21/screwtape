@@ -1,5 +1,11 @@
+import java.security.Key;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.jupiter.api.parallel.Execution;
 
 /**
  * A Screwtape interpreter that executes programs written in the Screwtape esoteric programming language.
@@ -105,10 +111,27 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public Map<Integer, Integer> bracketMap(String program) {
-    // TODO: Implement this
-    // Hint: use a stack
-    return null;
-  }
+        // TODO: Implement this
+        Deque<Integer> stack = new ArrayDeque<>(); // Track opening bracket indices
+        Map<Integer, Integer> map = new HashMap<>(); // Store bracket pairs
+        
+        for (int i = 0; i < program.length(); i++) {
+            char c = program.charAt(i);
+            if (c == '[') {
+                stack.push(i); // Remember opening bracket position
+            } else if (c == ']') {
+                if (stack.isEmpty()) {
+                    throw new IllegalArgumentException("Unmatched ']' at index " + i);
+                }
+                int opener = stack.pop(); // Get matching opener index
+                map.put(i, opener); // Map closer -> opener
+            }
+        }
+        if (!stack.isEmpty()) {
+            throw new IllegalArgumentException("Unmatched '[' brackets");
+        }
+        return map;
+    }
 
   /**
    * Executes a Screwtape program and returns the output as a string.
@@ -129,8 +152,61 @@ public class ScrewtapeInterpreter {
    * @throws IllegalArgumentException If the program contains unmatched brackets.
    */
   public String execute(String program) {
-    // TODO: Implement this
-    // If you get stuck, you can look at hint.md for a hint
-    return null;
-  }
+    
+    Map<Integer, Integer> brackets = bracketMap(program); // Get jump map
+        StringBuilder output = new StringBuilder(); // Store characters
+        int pc = 0; // Program counter
+        
+        while (pc < program.length()) {
+            char cmd = program.charAt(pc);
+            switch (cmd) {
+                case '>': // Move right
+                    if (tapePointer.next == null) {
+                        tapePointer.next = new Node(0); // Extend tape
+                        tapePointer.next.prev = tapePointer;
+                    }
+                    tapePointer = tapePointer.next;
+                    pc++;
+                    break;
+                    
+                case '<': // Move left
+                    if (tapePointer.prev == null) {
+                        Node newNode = new Node(0); // Extend tape left
+                        newNode.next = tapePointer;
+                        tapePointer.prev = newNode;
+                        tapeHead = newNode; // Update head
+                    }
+                    tapePointer = tapePointer.prev;
+                    pc++;
+                    break;
+                    
+                case '+': // Increment
+                    tapePointer.value++;
+                    pc++;
+                    break;
+                    
+                case '-': // Decrement
+                    tapePointer.value--;
+                    pc++;
+                    break;
+                    
+                case '.': // Output
+                    output.append((char) tapePointer.value);
+                    pc++;
+                    break;
+                    
+                case ']': // Loop control
+                    if (tapePointer.value != 0) {
+                        pc = brackets.get(pc); // Jump back
+                    } else {
+                        pc++; // Exit loop
+                    }
+                    break;
+                    
+                default: // Ignore others
+                    pc++;
+            }
+        }
+        return output.toString();
+    }
 }
