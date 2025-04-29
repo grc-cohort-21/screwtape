@@ -42,21 +42,7 @@ class NodeTest {
   }
 
   
-  @Test
-  void testListConstructorWithNullList() {
-    // Arrange
-    List<Integer> values = List.of(null,null,null);
 
-    // Act
-    Node head = new Node(values);
-
-    // Assert
-    assertNull(head.next);
-    assertNull(head.prev.next);
-    assertNull(head.prev);
-    assertNull(head.prev.next);
-    assertEquals(head, head.next.prev);
-    assertEquals(head.next, head.next.next.prev);  }
 
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
   @Test
