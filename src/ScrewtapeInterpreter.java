@@ -173,7 +173,6 @@ public class ScrewtapeInterpreter {
     String outputString = "";
     Node current = tapePointer;
 
-    //Stack<Integer> stack = new Stack<>();
     Map<Integer, Integer> map = bracketMap(program);
 
     int index = 0; // instructionPointer
@@ -192,6 +191,7 @@ public class ScrewtapeInterpreter {
         {
           Node newNode = new Node(0);
           tapePointer.next = newNode;
+          newNode.prev = tapePointer;
         }
 
         tapePointer = tapePointer.next;
@@ -216,19 +216,19 @@ public class ScrewtapeInterpreter {
         outputString += c;                                  
       } 
       
-      // example: +++++++[>+++[>+++++<-]<-]>>.
-      else if (program.charAt(index) == '[') // stack: 8,13
+      // example: "+++[>++<-]>" ; rough steps: 0 -> 3 2 -> 2 2 -> 2 4 -> 1 4 -> 0 6 ; bracketMap(program) --> {9 : 3}
+      else if (program.charAt(index) == '[')
       {
-        //stack.push(index);
+        // do nothing
       } 
       
-      else if (program.charAt(index) == ']') // instructionpointer: 22
+      else if (program.charAt(index) == ']') // instructionpointer/index: 9
       {
-        if (tapePointer.value != 0)
+        // If the value in the current memory node is not 0, jump back to the matching `[`.
+        if (tapePointer.value != 0) // if current val (2) != 0
         {
-          //tapePointer.value--;
-          //index = map.get(index);
-          //index = stack.pop();
+          index = map.get(index);
+          index--;        
         }
       }
 
