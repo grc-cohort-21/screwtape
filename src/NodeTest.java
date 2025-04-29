@@ -40,11 +40,35 @@ class NodeTest {
         "Expected constructor to throw IllegalArgumentException for an empty list."
     );
   }
-
   
   // TODO: Add test for list constructor when passed null list
-  // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  @Test
+  void testListConstructorWithNullValue() {
+    // Arrange, Act, Assert
+    List<Integer> nullList = null;
+    assertThrows(
+      IllegalArgumentException.class,
+      () -> new Node(nullList),
+      "List can't be null or empty."
+    );
+  }
 
+  // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  // Testing for only one item
+  @Test
+  void testListConstructorWithOneItem() {
+    // Arrange
+    List<Integer> oneItem = new ArrayList<>();
+    oneItem.add(1);
+
+    // Act
+    Node head = new Node(oneItem);
+
+    // Assert
+    assertEquals(1, head.value);
+    assertNull(head.next);
+    assertNull(head.prev);
+  }
 
   // -------- WAVE 2 -------
 
@@ -68,5 +92,36 @@ class NodeTest {
   }
 
   // TODO: Add test for Node with no next or prev
+  @Test 
+  void testToListWithOneValue() {
+    // Arrange
+    Node head = new Node(10);
+
+    // Act
+    List<Integer> value = head.toList();
+
+    // Assert
+    assertEquals(List.of(10), value);
+  }
+
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
+  // Test for nodes with multiple connections, but only return the last node in list
+  @Test
+  void testToListOnLastValue() {
+    // Arrange
+    Node head = new Node(15);
+    Node middle = new Node(20);
+    Node last = new Node(25);
+
+    head.next = middle;
+    middle.prev = head;
+    middle.next = last;
+    last.prev = middle;
+
+    // Act
+    List<Integer> value = last.toList();
+
+    // Assert
+    assertEquals(List.of(25), value);
+  }
 }

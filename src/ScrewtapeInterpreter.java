@@ -1,5 +1,7 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * A Screwtape interpreter that executes programs written in the Screwtape esoteric programming language.
@@ -107,7 +109,28 @@ public class ScrewtapeInterpreter {
   public Map<Integer, Integer> bracketMap(String program) {
     // TODO: Implement this
     // Hint: use a stack
-    return null;
+    Map<Integer, Integer> placements = new HashMap<>();
+    Stack<Integer> locations = new Stack<>();
+
+    for (int i = 0; i < program.length(); i++) {
+      if (program.charAt(i) == '[') {
+        locations.push(i);
+      }
+      else if (program.charAt(i) == ']') {
+        if (locations.isEmpty()) {
+          throw new IllegalArgumentException("Contains unmatched brackets.");
+        }
+        else {
+          placements.put(i, locations.pop());
+        }
+      }
+    }
+
+    if (!locations.isEmpty()) {
+      throw new IllegalArgumentException("Contains unmatched brackets.");
+    }
+
+    return placements;
   }
 
   /**
@@ -131,6 +154,49 @@ public class ScrewtapeInterpreter {
   public String execute(String program) {
     // TODO: Implement this
     // If you get stuck, you can look at hint.md for a hint
-    return null;
+    String output = "";
+
+    try {
+      Map<Integer, Integer> brackets = bracketMap(program);
+
+      for (int i = 0; i < program.length(); i++) {
+        if (program.charAt(i) == '+') {
+          tapePointer.value = tapePointer.value + 1;
+        }
+        else if (program.charAt(i) == '-') {
+          tapePointer.value = tapePointer.value - 1;
+        }
+        else if (program.charAt(i) == '>') {
+          if (tapePointer.next == null) {
+            Node newValue = new Node(0);
+            tapePointer.next = newValue;
+            newValue.prev = tapePointer;
+          }
+          tapePointer = tapePointer.next;
+        }
+        else if (program.charAt(i) == '<') {
+          if (tapePointer.prev == null) {
+            Node newValue = new Node(0);
+            newValue.next = tapePointer;
+            tapePointer.prev = newValue;
+            tapeHead = newValue;
+          }
+          tapePointer = tapePointer.prev;
+        }
+        else if (program.charAt(i) == '.') {
+          char characterOutput = (char) getTapePointerValue();
+          output += characterOutput;
+        }
+        else if (program.charAt(i) == ']') {
+          if (getTapePointerValue() != 0) {
+            i = brackets.get(i);
+          }
+        }
+      }
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Contains unmatched brackets.");
+    }
+    
+    return output;
   }
 }
