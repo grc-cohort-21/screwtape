@@ -39,17 +39,25 @@ public class Node {
    */
   public Node(List<Integer> list) 
   {
-    // Initialize the head node
-    Node head = new Node(list.get(0));
-    Node curr = head; // Set a marker to hold the current spot
-    Node pre = head; // Set a marker to point to the previous node
+    if (list == null || list.isEmpty())
+      {
+        throw new IllegalArgumentException("Error: The list is null or empty");
+      }
     
-    for (int i = 1; i < list.size(); i++)  // For each item in the list
+    //Initialize the head node
+    Node head = new Node(this.value = list.get(0));
+
+    head.next = this.next = new Node(list.get(1));
+    head.next.prev = head;
+    head = head.next;
+
+
+    for (int i = 2; i < list.size(); i++)  // For each item in the list
     {
-      curr.next = new Node(list.get(i)); // Set the next node in line
-      curr = curr.next; // set the current node to the next one in line
-      curr.prev = pre; // set the prev
-      pre = pre.next; // iterate the pre marker
+
+      head.next = new Node(list.get(i));
+      head.next.prev = head;
+      head = head.next;
     }
     
   }
