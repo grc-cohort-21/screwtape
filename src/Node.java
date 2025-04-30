@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -68,8 +69,35 @@ public class Node {
    *
    * @return A list of integers representing the values in the linked list.
    */
-  public List<Integer> toList() {
-    // TODO: Implement this
-    return null;
+  public List<Integer> toList() 
+  {
+    // Initialize List
+    List<Integer> nodeList = new LinkedList<>();
+
+    // Add the first value or zero if empty
+    nodeList.add(this.value);
+
+    // If there are no more nodes return list as is
+    if (this.next == null)
+    {
+      return nodeList;
+    }
+
+    // Create marker from the second node
+    Node check = this.next;
+
+    // Add the current value
+    nodeList.add(check.value);
+    
+    // If there are more nodes go through adding from value and going to the next node
+    while (check.next != null)
+    {
+      check = check.next;
+      nodeList.add(check.value);
+    }
+
+    // Return list
+    return nodeList;
+    
   }
 }
