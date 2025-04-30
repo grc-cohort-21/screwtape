@@ -56,6 +56,7 @@ class NodeTest {
       "Expected constructor to throw IllegalArgumentException for a null list."
     );
   }
+
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
 
 
@@ -81,5 +82,18 @@ class NodeTest {
   }
 
   // TODO: Add test for Node with no next or prev
+  @Test
+  void testToListWithNoNext()
+  {
+    // Arrange
+    Node head = new Node(12);
+
+    // Act
+    List<Integer> value = head.toList();
+
+    // Assert
+    assertEquals(List.of(12), value);
+  }
+
   // TODO: Add at least one more test for list constructor that would be useful and cover new ground.
 }
