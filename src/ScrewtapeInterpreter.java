@@ -176,10 +176,13 @@ public class ScrewtapeInterpreter {
     // Go through each point in the program
     for (int i = 0; i < dataArray.length; i++) 
     {
-      // If plus, increase the value in the current node
-      if (dataArray[i] == '+')
+      if (dataArray[i] == '+') // If plus, increase the value in the current node
       {
         tapePointer.value++;
+      }
+      else if (dataArray[i] == '-') // If - , decrease the value in the current node
+      {
+        tapePointer.value--;
       }
 
     }
