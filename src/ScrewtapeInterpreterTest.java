@@ -43,6 +43,26 @@ class ScrewtapeInterpreterTest {
 
   }
 
+  @Test
+  void testBracketMapWithMultipleSeparateBrackets()
+  {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[+++][---]<<[+]";
+
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(4, 0);
+    expectedMap.put(9, 5);
+    expectedMap.put(14, 12);
+
+    // Act
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+    // Assert
+    assertEquals(expectedMap, actualMap);
+
+  }
+
   
 
   @Test
