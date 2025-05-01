@@ -46,16 +46,12 @@ public class Node {
       }
     
     //Initialize the head node
-    Node head = new Node(this.value = list.get(0));
+    this.value = list.get(0);
+    Node head = this;
 
-    head.next = this.next = new Node(list.get(1));
-    head.next.prev = head;
-    head = head.next;
-
-
-    for (int i = 2; i < list.size(); i++)  // For each item in the list
+    // Use the list to add the next node and a previous connection for each item
+    for (int i = 1; i < list.size(); i++)
     {
-
       head.next = new Node(list.get(i));
       head.next.prev = head;
       head = head.next;
@@ -98,6 +94,6 @@ public class Node {
 
     // Return list
     return nodeList;
-    
+
   }
 }
