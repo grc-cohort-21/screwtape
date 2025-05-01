@@ -63,6 +63,22 @@ class ScrewtapeInterpreterTest {
 
   }
 
+  @Test
+  void testBracketMapWithMismatchedBrackets()
+  {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[+-+]]--]";
+
+    // Act and Assert
+    assertThrows(
+      IllegalArgumentException.class,
+      () -> interpreter.bracketMap(program),
+      "Expected bracketMap to throw IllegalArgumentException for mismatched brackets."
+    );
+
+  }
+
   
 
   @Test
