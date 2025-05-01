@@ -190,8 +190,21 @@ public class ScrewtapeInterpreter {
         {
           tapePointer.next = new Node(0);
         }
-        
+
         tapePointer = tapePointer.next;
+
+      }
+      else if (dataArray[i] == '<') // If < , go to the previous Node
+      {
+        if (tapePointer.prev == null)
+        {
+          tapeHead.prev = new Node(0);
+          tapeHead = tapeHead.prev;
+          tapeHead.next = tapePointer;
+        }
+
+        tapePointer = tapePointer.prev;
+
       }
 
     }
