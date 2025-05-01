@@ -170,6 +170,8 @@ public class ScrewtapeInterpreter {
     // Set up the return String
     String message = "";
 
+    Stack<Integer> bracketPile = new Stack<>();
+
     // Break the program up into an array
     char[] dataArray = program.toCharArray();
 
@@ -189,6 +191,7 @@ public class ScrewtapeInterpreter {
         if (tapePointer.next == null)
         {
           tapePointer.next = new Node(0);
+          tapePointer.next.prev = tapePointer;
         }
 
         tapePointer = tapePointer.next;
@@ -211,6 +214,21 @@ public class ScrewtapeInterpreter {
         char interpreted = (char) tapePointer.value;
         message = message + interpreted;
 
+      }
+      else if (dataArray[i] == '[') // If [ , add to the stack
+      {
+        bracketPile.push(i);
+      }
+      else if (dataArray[i] == ']') // If ], pull from the stack, and go back to that point
+      {
+        if (tapePointer.value > 0)
+        {
+          i = bracketPile.peek();
+        }
+        else if (tapePointer.value == 0)
+        {
+          bracketPile.pop();
+        }
       }
 
     }
