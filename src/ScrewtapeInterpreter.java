@@ -184,6 +184,15 @@ public class ScrewtapeInterpreter {
       {
         tapePointer.value--;
       }
+      else if (dataArray[i] == '>') // If > , go to the next Node
+      {
+        if (tapePointer.next == null)
+        {
+          tapePointer.next = new Node(0);
+        }
+        
+        tapePointer = tapePointer.next;
+      }
 
     }
 
