@@ -167,8 +167,8 @@ public class ScrewtapeInterpreter {
    */
   public String execute(String program) 
   {
-    // TODO: Implement this
-    // If you get stuck, you can look at hint.md for a hint
+    // Set up the return String
+    String message = "";
 
     // Break the program up into an array
     char[] dataArray = program.toCharArray();
@@ -206,9 +206,17 @@ public class ScrewtapeInterpreter {
         tapePointer = tapePointer.prev;
 
       }
+      else if (dataArray[i] == '.') // If . , add the value to the message
+      {
+        char interpreted = (char) tapePointer.value;
+        message = message + interpreted;
+
+      }
 
     }
 
-    return null;
+    return message;
+
   }
+
 }
