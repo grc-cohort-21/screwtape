@@ -26,6 +26,53 @@ class ScrewtapeInterpreterTest {
   // TODO: Implement more tests for bracketMap
   // At a bare minimum, implement the other examples from the Javadoc and at least one more you come up with
 
+  @Test
+  void testSimpleBrackets() {
+    String program = ">[+>[+-]<]";
+    Map<Integer, Integer> map = ScrewtapeInterpreter.bracketMap(program);
+    assertEquals(2, map.size());
+    assertEquals(1, map.get(9));
+    assertEquals(4, map.get(7));
+  }
+
+  @Test
+  void testNoBrackets() {
+    String program = "++>--<.";
+    Map<Integer, Integer> map = ScrewtapeInterpreter.bracketMap(program);
+    assertTrue(map.isEmpty());
+  }
+
+  @Test
+  void testUnmatchedOpening() {
+    String program = "[++";
+    Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+      ScrewtapeInterpreter.bracketMap(program);
+    });
+    assertTrue(exception.getMessage().contains("Unmatched opening bracket"));
+  }
+
+  @Test
+  void testUnmatchedClosing() {
+    String program = "++]";
+    Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+      ScrewtapeInterpreter.bracketMap(program);
+    });
+    assertTrue(exception.getMessage().contains("Unmatched closing bracket"));
+  }
+
+  @Test
+void testMultipleSeparateBrackets() {
+  String program = "[++]>[+++]";
+
+  Map<Integer, Integer> expectedMap = new HashMap<>();
+  expectedMap.put(3, 0);  
+  expectedMap.put(9, 5);  
+
+  Map<Integer, Integer> actualMap = ScrewtapeInterpreter.bracketMap(program);
+
+  assertEquals(expectedMap, actualMap);
+}
+
   
 
   @Test
