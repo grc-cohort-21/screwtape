@@ -192,11 +192,16 @@ public class ScrewtapeInterpreter {
           break;
   
         case '[':
-          if (tapePointer.value == 0) {
-            pc = brackets.get(pc); 
+        if (tapePointer.value == 0) {
+          for (Map.Entry<Integer, Integer> entry : brackets.entrySet()) {
+            if (entry.getValue() == pc) {
+              pc = entry.getKey();
+              break;
+            }
           }
-          break;
-  
+        }
+        break;
+
         case ']':
           if (tapePointer.value != 0) {
             pc = brackets.get(pc); 
