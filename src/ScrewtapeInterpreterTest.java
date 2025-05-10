@@ -25,8 +25,63 @@ class ScrewtapeInterpreterTest {
 
   // TODO: Implement more tests for bracketMap
   // At a bare minimum, implement the other examples from the Javadoc and at least one more you come up with
+  @Test
+  void testThrowsErrorIfProgramContainsUnmatchedBrackets() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = ">[]<]";
+    
+    // Act & assert
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {interpreter.bracketMap(program);
+      });
+  }
 
+  @Test
+  void testSkipsOverAnyOtherCharsThatArentBrackets() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[++++[+++[++]]++++<>+]";
+
+    // Act
+    Map<Integer, Integer> expectedMap = new HashMap<>();
+    expectedMap.put(21, 0);
+    expectedMap.put(13, 5);
+    expectedMap.put(12,9);
+    
+    // Assert
+    Map<Integer, Integer> actualMap = interpreter.bracketMap(program);
+
+    assertEquals(expectedMap, actualMap);
+  }
+
+  @Test
+  void testThrowsErrorIfStringOnlyHasSeveralOpenBrackets() {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "[[[[[[[[[[[[[";
+    
+    // Act & assert
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {interpreter.bracketMap(program);
+      });
+  }
   
+  @Test
+  void testThrowsErrorIfStringIsEmtpy()
+  {
+    // Arrange
+    ScrewtapeInterpreter interpreter = new ScrewtapeInterpreter();
+    String program = "";
+    
+    // Act & assert
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {interpreter.bracketMap(program);
+      });
+  }
 
   @Test
   void testAdd() {
